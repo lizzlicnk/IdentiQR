@@ -233,7 +233,7 @@
             $mail->AltBody = $textoPlano;
 
             $mail->send();
-            echo 'El mensaje ha sido enviado correctamente';
+            
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }

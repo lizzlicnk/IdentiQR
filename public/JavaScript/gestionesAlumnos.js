@@ -20,23 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
 /*2. MENSAJES DE NOTIFICACIONES */
 
 function registroAlumno(){
-
-}
-
-function mostrarRegistroAlumno() {
     Swal.fire({
         title: "Registro exitoso",
-        text: "Se registro al alumno",
-        icon: "success",
-        timer: 3000,
-        showConfirmButton: false
-    });
-}
-
-function mostrarQREnviado() {
-    Swal.fire({
-        title: "QR enviado",
-        text: "El QR fue enviado exitosamente",
+        text: "Se registro adecuadamente. Su código QR fue enviado al correo registrado.",
         icon: "success",
         timer: 3000,
         showConfirmButton: false

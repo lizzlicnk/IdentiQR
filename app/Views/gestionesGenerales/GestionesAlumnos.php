@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/IdentiQR/public/CSS/gestionesAlumnos.css"> <!--CSS-->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        
+
         <script src="/IdentiQR/public/JavaScript/gestionesAlumnos.js"></script> <!-- JS -->
         <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
         <!--*: Da formato frente para el registro - MODIFICAR-->
@@ -53,7 +53,8 @@
         <!-- *Formulario para el registro de los alumnos-->
         <!-- !Este formulario debe estar conectado a la base de datos-->
 
-        <section id="seccionRegistrarAlumno" class = "seccionRegistrarAlumno">
+        <div class="contenedor-secciones">
+            <section id="seccionRegistrarAlumno" class = "seccionRegistrarAlumno">
             <!-- <form action = "../Controllers/ControladorAlumnos.php" method="POST" > -->
                 <form action = "/IdentiQR/app/Controllers/ControladorAlumnos.php?action=registroAlumno" method = "POST">
                 <fieldset>
@@ -189,7 +190,7 @@
                 <!--Este será el boton para enviar los datos-->
                 <div class="form-group row">
                     <div class="offset-4 col-8">
-                        <input type="submit" name="Enviar_Alumno" value = "Enviar_Alumno"  class="btn btn-primary">
+                        <input type="submit" name="Enviar_Alumno" value = "Enviar_Alumno"  class="btn btn-primary" onclick = "registroAlumno()">
                     </div>
                 </div>
             </form>
@@ -236,7 +237,7 @@
                             <th>Nombre</th>
                             <th>Apellido P.</th>
                             <th>Apellido M.</th>
-                            <th>Cuatrimestre</th>
+                            <th>Cuatri</th>
                             <th>Fecha Nacimiento</th>
                             <th>Tipo Sangre</th>
                             <th>Correo</th>
@@ -302,6 +303,7 @@
                 </fieldset>
             </form>
         </section>
+        </div>
 
         <hr>
         <footer class="FooterIndex1" id = "FooterIndex1">
@@ -441,7 +443,22 @@
 
                 Instascan.Camera.getCameras().then(function (cameras) {
                     if (cameras.length > 0) {
-                        scanner.start(cameras[0]);
+                        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                        let selectedCamera = cameras[0];
+                        if (isMobile) {
+                            // Preferir cámara trasera en dispositivos móviles
+                            for (let cam of cameras) {
+                                if (cam.name.toLowerCase().includes('back') || cam.name.toLowerCase().includes('rear') || cam.name.toLowerCase().includes('trasera')) {
+                                    selectedCamera = cam;
+                                    break;
+                                }
+                            }
+                            // Si no se encontró por nombre, asumir que la última es la trasera
+                            if (selectedCamera === cameras[0] && cameras.length > 1) {
+                                selectedCamera = cameras[cameras.length - 1];
+                            }
+                        }
+                        scanner.start(selectedCamera);
                         estado.innerHTML = 'Cámara activada. Escaneando...';
                     } else {
                         estado.innerHTML = '<span class="text-danger">No se encontraron cámaras.</span>';

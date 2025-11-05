@@ -93,8 +93,9 @@
         </div>
         <hr>
         <!-- TODO: Aquí empezaremos con la información que tiene que ver con los datos o mayoritariamente del index principal (Recursos, etc.)-->
-        
-        <div id="seccionRegistrarUsuario" class = "Registro_ContenedorGeneral">
+
+        <div class="contenedor-secciones">
+            <div id="seccionRegistrarUsuario" class = "Registro_ContenedorGeneral">
             <h2>Registro</h2>
             <form action="/IdentiQR/app/Controllers/ControladorUsuario.php?action=registroUsuario" method="POST">
                 <fieldset>
@@ -305,6 +306,7 @@
                         onclick = "return confirmacionEliminacionUsr(event)">Eliminar Usuario</button>
                 </fieldset> 
             </form>
+        </div>
         </div>
 
         <hr>

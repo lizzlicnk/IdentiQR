@@ -167,11 +167,12 @@
                 }
                 /*EVALUAMOS SI ESTA VACIO LA ACTUALIZACIÓN*/
                 if(isset($_POST['actualizarDatosUSER'])){
-                    /*Creamos un constructor del USUARIO y mandamos la info nuevamente*/    
+                    /*Creamos un constructor del USUARIO y mandamos la info nuevamente*/
                     $usuario = new Usuario(
                         $_POST['nombre'],
                         $_POST['apellido_paterno'],
                         $_POST['apellido_materno'],
+                        $_POST['genero'],
                         $_POST['email'],
                         $_POST['passw'],
                         $_POST['rol'],
@@ -179,7 +180,6 @@
                     );
 
                     // Agregamos los campos faltantes
-                    //$usuario->setGenero($_POST['genero']);
                     $usuario->setIdUsuario((int)$_POST['id_usuario']);
                     $resultado = $this->modelUser->actualizarUsuario($usuario);
                     if ($resultado) {
@@ -187,7 +187,7 @@
                     } else {
                         echo "<script>alert('Error al actualizar el usuario.');</script>";
                     }
-                    
+
                     /*UPDATE usuario set nombre = ?, apellido_paterno = ?, apellido_materno = ?, genero = ?, email = ?, passw = ?, rol = ?, idDepto = ? where id_usuario = ? */
                 }
 

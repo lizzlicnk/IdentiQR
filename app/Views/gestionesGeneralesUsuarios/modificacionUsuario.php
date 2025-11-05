@@ -4,8 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--*: Bootstrap-->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/IdentiQR/public/CSS/gestionesUsuarios.css">
         <title>Actualización de datos... IdentiQR</title>
     </head>
     <body>
@@ -26,11 +27,12 @@
                 </div>
             </div>
         </header>
-        <div class="container p-3 my-3 border" id = "container p-3 my-3 border">
+        <div class="contenedor-secciones">
+            <div class="Registro_ContenedorGeneral">
             <form action="/IdentiQR/app/Controllers/ControladorUsuario.php?action=updateUsuarioID" method="POST">
                 <input type="hidden" name="id_usuario" value = <?php echo $row['id_usuario']; ?>>
                 <fieldset>
-                <legend>Actualizar usuario echo <?php echo $row['nombre'];?></legend>
+                <legend>Actualizar usuario <?php echo $row['nombre'];?></legend>
                     <div class="form-group row">
                         <label for="usuario" class="col-4 col-form-label">Nombre(s)</label> 
                         <div class="col-8">
@@ -48,15 +50,28 @@
                     <br><br>
 
                     <div class="form-group row">
-                        <label for="apellido_materno" class="col-4 col-form-label">Apellido materno:</label> 
+                        <label for="apellido_materno" class="col-4 col-form-label">Apellido materno:</label>
                         <div class="col-8">
                             <input type="text" id="apellido_materno" name="apellido_materno" placeholder = "Ingresa tu apellido materno" value = "<?php echo $row['apellido_materno'];?>" required>
                         </div>
                     </div>
                     <br><br>
+
+                    <div class="form-group row">
+                        <label for="genero" class="col-4 col-form-label">Género:</label>
+                        <div class="col-8">
+                            <select id="genero" name="genero" required>
+                                <option value="" disabled>Selecciona una opción</option>
+                                <option value="Masculino" <?php echo ($row['genero'] == 'Masculino') ? 'selected' : ''; ?>>Masculino</option>
+                                <option value="Femenino" <?php echo ($row['genero'] == 'Femenino') ? 'selected' : ''; ?>>Femenino</option>
+                                <option value="Otro" <?php echo ($row['genero'] == 'Otro') ? 'selected' : ''; ?>>Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br><br>
                     <!--*: Aquí se debe considerar que para registrar debe ser dominio UPEMOR-->
                     <div class="form-group row">
-                        <label for="Email" class="col-4 col-form-label">Correo electronico</label> 
+                        <label for="Email" class="col-4 col-form-label">Correo electronico</label>
                         <div class="col-8">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -118,13 +133,43 @@
                             </select>
                         </div>
                     </div> 
-                <input type="hidden" id="idDepto" name="idDepto" value="">
+                <input type="hidden" id="idDepto" name="idDepto" value="<?php echo $row['idDepto']; ?>">
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
                     const selectRol = document.getElementById("rol");
                     const selectDepto = document.getElementById("depto");
-                    // Desactiva el campo de departamento desde el inicio
-                    //selectDepto.readonly = true;
+                    // Inicializar el departamento basado en el rol actual
+                    const currentRol = selectRol.value;
+                    let initialDeptoValue = "";
+                    switch (currentRol) {
+                        case "Administrador":
+                            initialDeptoValue = "1";
+                            break;
+                        case "Administrativo_Vinculacion":
+                            initialDeptoValue = "7";
+                            break;
+                        case "Administrativo_ServicioEsco":
+                            initialDeptoValue = "3";
+                            break;
+                        case "Administrativo_DesaAca":
+                            initialDeptoValue = "4";
+                            break;
+                        case "Administrativo_DAE":
+                            initialDeptoValue = "5";
+                            break;
+                        case "Administrativo_Direccion":
+                            initialDeptoValue = "2";
+                            break;
+                        case "Administrativo_Medico":
+                            initialDeptoValue = "6";
+                            break;
+                        default:
+                            initialDeptoValue = "<?php echo $row['idDepto']; ?>";
+                            break;
+                    }
+                    selectDepto.value = initialDeptoValue;
+                    document.getElementById("idDepto").value = initialDeptoValue;
+
                     selectRol.addEventListener("change", function() {
                     let rolSeleccionado = this.value;
                     let deptoValue = "";
@@ -163,11 +208,12 @@
                 <br><br>
                 <div class="form-group row">
                     <div class="offset-4 col-8">
-                        <button name="actualizarDatosUSER" type="submit" class="btn btn-primary">Actualizar datos</button>
+                        <button name="actualizarDatosUSER" type="submit" class="btn">Actualizar datos</button>
                     </div>
                 </div>
                 </fieldset>
             </form>
+            </div>
         </div>
 
         <footer class="FooterIndex1" id = "FooterIndex1">
