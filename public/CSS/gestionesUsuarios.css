@@ -1,0 +1,10 @@
+:root {
+    --color-principal-morado: #6a0dad; /* Morado UPEMOR */
+    --color-secundario-amarillo: #ffc107; /* Amarillo Institucional */
+    --color-terciario-rojo: #dc3545; /* Rojo de Alerta/Suspensión */
+    --color-fondo-general: #f4f4f4; /* Fondo claro */
+    --color-fondo-sidebar: #4b0082; /* Morado oscuro para sidebar */
+    --color-borde-primario: #ccc;
+    --color-texto-claro: #ffffff;
+    --color-texto-oscuro: #333333;
+}

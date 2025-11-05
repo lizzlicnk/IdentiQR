@@ -1,0 +1,359 @@
+/* Estructura base para mantener el footer abajo */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+header {
+    background: #f6ac35;
+    color: #fff;
+    opacity: 0.95;
+    padding: 24px 0;
+    text-align: center;
+    box-shadow: 0 2px 8px #00000012;
+    justify-content: space-between;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+
+.ImagenIndex1 {
+    display: block;
+    margin: 20px auto 0;
+    max-width: 100%;
+    height: auto;
+}
+.ImagenIndex1 img{
+    height: 200px;
+    width: 400px;
+    margin-left: 20px;
+}
+
+nav {
+    margin-top: 16px;
+}
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    flex-wrap: wrap;
+}
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 18px;
+    font-weight: 500;
+    transition: color 0.2s;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+nav a:hover {
+    color: #f339fde9;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    background: #fbf4f4;
+    color: #222;
+}
+body .Index1_ContenedorGeneral{
+    padding: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+footer {
+    text-align: center;
+    padding: 18px 0;
+    background: #701875;
+    color: #fff;
+    margin-top: auto;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    border-top: 1px solid #eaeaea;
+}
+
+/* ----- Header compacto y responsivo ----- */
+.site-header {
+    background: #f6ac35;
+    color: #fff;
+    padding: 12px 0;              /* menos alto que antes */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.site-header .header-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* Left: logo + brand (title + tagline) */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Logo */
+.ImagenIndex1 {
+    height: 150px;    /* tamaño compacto */
+    width: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0;
+    border-radius: 6px;
+}
+
+/* Brand: título y subtítulo */
+.brand h1 {
+    margin: 0;
+    font-size: 1.25rem;  /* tamaño equilibrado */
+    line-height: 1;
+    color: #fff;
+    letter-spacing: 0.6px;
+}
+.brand .tagline {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #ffffffeb;
+    opacity: 0.95;
+    margin-top: 2px;
+}
+
+/* Right: nav + botón */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Nav horizontal en desktop */
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+.nav-list a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background .12s ease, color .12s ease;
+}
+.nav-list a:hover,
+.nav-list a.select {
+    background: rgba(209, 21, 238, 0.601);
+    color: #ffffff;
+}
+
+/* Botón menú mobile (hidden desktop) */
+.btn__menu {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 6px;
+}
+
+/* Ajustes responsive */
+@media (max-width: 880px) {
+    .site-header .header-inner {
+    align-items: center;
+}
+
+  /* Oculta nav y muestra botón */
+    .nav-list { display: none; }
+    .btn__menu { display: inline-flex; }
+
+  /* Si quieres, reduce logo y textos en móvil */
+    .ImagenIndex1 { height: 44px; }
+    .brand h1 { font-size: 1rem; }
+    .brand .tagline { display: none; } /* opcional: ocultar tagline en móvil */
+}
+
+/* Estilo opcional para el <hr> justo después del header */
+hr {
+    border: none;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    margin: 0;
+}
+/* Contenedor interno para limitar el ancho del footer */
+.footer__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+/* Ajustes visuales */
+footer {
+    background: #701875;
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    border-top: 1px solid #eaeaea;
+    padding: 2rem 0;
+    text-align: left;
+}
+
+/* Columnas internas */
+.footer__info,
+.footer__links,
+.footer__terms {
+    flex: 1 1 300px;
+}
+
+/* Enlaces */
+.footer__links a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+}
+
+.footer__links a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+.footer__container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.footer__info,
+.footer__links,
+    .footer__terms {
+        flex: 1 1 100%;
+    }
+}
+
+/* ---------- CONTENEDOR DEL LOGIN ---------- */
+.Login_ContenedorGeneral {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 18px #0000001a;
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 420px;
+    margin: 2rem auto;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.Login_ContenedorGeneral:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px #701875;
+}
+
+/* Título principal del formulario */
+.Login_ContenedorGeneral h2 {
+    margin-bottom: 1.5rem;
+    color: #701875;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+/* FIELDSET */
+.Login_ContenedorGeneral fieldset {
+    border: 2px solid #701875;
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    background: #fffaf5;
+}
+
+.Login_ContenedorGeneral legend {
+    color: #701875;
+    font-weight: bold;
+    padding: 0 0.5rem;
+}
+
+/* LABELS */
+.Login_ContenedorGeneral label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.4rem;
+    color: #444;
+    font-weight: 600;
+    text-align: left;
+}
+
+/* INPUTS */
+.Login_ContenedorGeneral input[type="text"],
+.Login_ContenedorGeneral input[type="password"] {
+    width: 80%;
+    padding: 0.8rem;
+    border-radius: 6px;
+    border: 1.5px solid #701875;
+    font-size: 1rem;
+    font-family: 'Times New Roman', Times, serif;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.Login_ContenedorGeneral input:focus {
+    outline: none;
+    border-color: #701875;
+    box-shadow: 0 0 6px #701875;
+}
+
+/* BOTÓN */
+.Login_ContenedorGeneral button[type="submit"] {
+    background: #701875;
+    color: #fff;
+    border: none;
+    padding: 0.9rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    width: 100%;
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.Login_ContenedorGeneral button[type="submit"]:hover {
+    background: #8d1d90;
+    transform: scale(1.02);
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+    .Login_ContenedorGeneral {
+        padding: 2rem 1.2rem;
+        max-width: 95%;
+    }
+}

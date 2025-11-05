@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--*: Bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Actualización de datos... IdentiQR</title>
+    </head>
+    <body>
+        <!-- !Aquí se encontrara el emcabezado, este podrá cambiar: nota-->
+        <header id="HeaderIndex1">
+            <div class="container__header">
+                <div class="logo">
+                    <img src="/IdentiQR/public/Media/img/IdentiQR-Eslogan-SinFonde.png" alt="IdentiQR Logo" height = "150px" weight = "150px">
+                </div>
+                <div class="container__nav">
+                    <nav id="nav">
+                        <ul>
+                            <li><a href="/IdentiQR/index.html" class="select">INICIO</a></li>
+                            <li><a href="/IdentiQR/index.html#Temas">TEMAS</a></li>
+                            <li><a href="/IdentiQR/index.html#Contacto">CONTACTOS</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div class="container p-3 my-3 border" id = "container p-3 my-3 border">
+            <form action="/IdentiQR/app/Controllers/ControladorUsuario.php?action=updateUsuarioID" method="POST">
+                <input type="hidden" name="id_usuario" value = <?php echo $row['id_usuario']; ?>>
+                <fieldset>
+                <legend>Actualizar usuario echo <?php echo $row['nombre'];?></legend>
+                    <div class="form-group row">
+                        <label for="usuario" class="col-4 col-form-label">Nombre(s)</label> 
+                        <div class="col-8">
+                            <input type="text" id="nombre" name="nombre" placeholder = "Nombre o nombres" value = "<?php echo $row['nombre'];?>" required>
+                        </div>
+                    </div>
+                    <br><br>
+                    
+                    <div class="form-group row">
+                        <label for="apellido_paterno" class="col-4 col-form-label">Apellido paterno:</label> 
+                        <div class="col-8">
+                            <input type="text" id="apellido_paterno" name="apellido_paterno" placeholder = "Ingresa tu apellido paterno" value = "<?php echo $row['apellido_paterno'];?>" required>
+                        </div>
+                    </div>
+                    <br><br>
+
+                    <div class="form-group row">
+                        <label for="apellido_materno" class="col-4 col-form-label">Apellido materno:</label> 
+                        <div class="col-8">
+                            <input type="text" id="apellido_materno" name="apellido_materno" placeholder = "Ingresa tu apellido materno" value = "<?php echo $row['apellido_materno'];?>" required>
+                        </div>
+                    </div>
+                    <br><br>
+                    <!--*: Aquí se debe considerar que para registrar debe ser dominio UPEMOR-->
+                    <div class="form-group row">
+                        <label for="Email" class="col-4 col-form-label">Correo electronico</label> 
+                        <div class="col-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-address-book-o"></i>
+                                    </div>
+                                </div> 
+                                <input type="email" id="email" name="email" placeholder = "example@upemor.edu.mx" value = "<?php echo $row['email'];?>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+
+                    <div class="form-group row">
+                        <label for="password" class="col-4 col-form-label">Contraseña:</label> 
+                        <div class="col-8">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-lock"></i>
+                                    </div>
+                                </div> 
+                                <input type="password" id="passw" name="passw" placeholder = "Ingresa tu contraseña" value = "<?php echo $row['passw'];?>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+
+                    <div class="form-group row">
+                        <label for="rol" class="col-4 col-form-label">Rol o cargo:</label> 
+                        <div class="col-8">
+                            <select id="rol" name="rol" selected = "<?php echo $row['rol'];?>" required>
+                                <option disabled>Selecciona una opción</option>
+                                <option value="Administrador">Administrador</option>
+                                <option value="Administrativo_Vinculacion">Vinculacion</option>
+                                <option value="Administrativo_ServicioEsco">Servicios Escolares</option>
+                                <option value="Administrativo_DesaAca">Desarrollo Academico</option>
+                                <option value="Administrativo_DAE">Asuntos Estudiantiles</option>
+                                <option value="Administrativo_Direccion">Dirección Academica</option>
+                                <option value="Administrativo_Medico">Consultorio Médico</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br><br>
+                    <!--TODO: Considerar que si selecciono alguna opción que tenga que ver con su DEPARTAMENTO, este se le asignara por predeterminado la opción
+                    del departamento a escoger || NOTA. 2025-09-25-->
+                    <div class="form-group row">
+                        <label for="Departamento" class="col-4 col-form-label">Departamento:</label> 
+                        <div class="col-8">
+                            <select id="depto" name="idDepto" selected = "<?php echo $row['idDepto'];?>" required disabled>
+                                <option value="" disabled>Selecciona una opción</option>
+                                <option value="1">Ninguna especifica</option>
+                                <option value="2">Direccion Academica</option>
+                                <option value="3">Servicios Escolares</option>
+                                <option value="4">Dirección Desarrollo Academico(DDA)</option>
+                                <option value="5">Dirección Asuntos Estudiantiles(DAE)</option>
+                                <option value="6">Consultorio de atención de primer contacto</option>
+                                <option value="7">Vinculación</option>
+                            </select>
+                        </div>
+                    </div> 
+                <input type="hidden" id="idDepto" name="idDepto" value="">
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                    const selectRol = document.getElementById("rol");
+                    const selectDepto = document.getElementById("depto");
+                    // Desactiva el campo de departamento desde el inicio
+                    //selectDepto.readonly = true;
+                    selectRol.addEventListener("change", function() {
+                    let rolSeleccionado = this.value;
+                    let deptoValue = "";
+                        switch (rolSeleccionado) {
+                            case "Administrador":
+                                deptoValue = "1"; // Ninguna específica
+                                break;
+                            case "Administrativo_Vinculacion":
+                                deptoValue = "7"; // Vinculación
+                                break;
+                            case "Administrativo_ServicioEsco":
+                                deptoValue = "3"; // Servicios Escolares
+                                break;
+                            case "Administrativo_DesaAca":
+                                deptoValue = "4"; // Dirección Desarrollo Académico (DDA)
+                                break;
+                            case "Administrativo_DAE":
+                                deptoValue = "5"; // Dirección Asuntos Estudiantiles (DAE)
+                                break;
+                            case "Administrativo_Direccion":
+                                deptoValue = "2"; // Dirección Académica
+                                break;
+                            case "Administrativo_Medico":
+                                deptoValue = "6"; // Consultorio médico
+                                break;
+                            default:
+                                deptoValue = "";
+                                break;
+                        }
+                    selectDepto.value = deptoValue; // para mostrar en select
+                    document.getElementById("idDepto").value = deptoValue; // actualizar el input hidden
+                    });
+                });
+                </script>
+
+                <br><br>
+                <div class="form-group row">
+                    <div class="offset-4 col-8">
+                        <button name="actualizarDatosUSER" type="submit" class="btn btn-primary">Actualizar datos</button>
+                    </div>
+                </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <footer class="FooterIndex1" id = "FooterIndex1">
+            <div class="FooterIndex1">
+                <div class="footer__info">
+                    <h3>IdentiQR</h3>
+                    <p>
+                        ©2025 IdentiQR. Todos los derechos reservados.
+                        <br>
+                        Diseñado por: Lizbeth B. y Alexis S.
+                    </p>
+                </div>
+                <div class="footer__links">
+                    <!--*: Todo esto tiene que ver con los LINKS que se involucraran al diseñar el sitio web-->
+                    <a href="mailto: IdentiQR.info@gmail.com">Contact Us</a>
+                    <a href="#Terms_Index1">Terminos del servicio</a>
+                </div>
+            </div>
+
+            <!-- Nuevo div de términos -->
+            <div id="Terms_Index1">
+                <p>
+                    Toda información resguardada será de carácter relevante. 
+                    No se podrá acceder a este sistema si no se cuenta con previo registro. 
+                    Por ningún motivo el estudiante podrá acceder al sistema.
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>
