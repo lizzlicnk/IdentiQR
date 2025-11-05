@@ -12,7 +12,6 @@
         <script src="/IdentiQR/public/JavaScript/gestionesAlumnos.js" defer></script> <!-- JS -->
         <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
         <!--*: Da formato frente para el registro - MODIFICAR-->
-
         <title>IdentiQR</title>
     </head>
     <body>
@@ -403,10 +402,31 @@
                     })
                     .then(response => response.text())
                     .then(data => {
-                        // Redirigir o mostrar resultado
+                        // Mostrar resultado y botones para confirmar redirección
                         if (data.includes('redirect:')) {
                             const url = data.split('redirect:')[1];
-                            window.location.href = url;
+                            datosQR.innerHTML += '<br><p>¿Desea proceder con la redirección?</p>';
+                            datosQR.innerHTML += '<button id="aceptarBtn" class="btn btn-success">Aceptar</button> ';
+                            datosQR.innerHTML += '<button id="cancelarBtn" class="btn btn-danger">Cancelar</button> ';
+                            datosQR.innerHTML += '<button id="usarMatriculaBtn" class="btn btn-info">Solamente usar Matricula</button>';
+
+                            // Event listeners para los botones
+                            document.getElementById('aceptarBtn').addEventListener('click', function() {
+                                window.location.href = url;
+                            });
+                            document.getElementById('cancelarBtn').addEventListener('click', function() {
+                                cerrarModal();
+                            });
+                            document.getElementById('usarMatriculaBtn').addEventListener('click', function() {
+                                // Extraer la matrícula del contenido del QR
+                                const lines = content.split('\n');
+                                const matriculaLine = lines.find(line => line.startsWith('Matricula:'));
+                                if (matriculaLine) {
+                                    const matricula = matriculaLine.split(':')[1].trim();
+                                    document.getElementById('idAlumno_BajaUSUARIO').value = matricula;
+                                }
+                                cerrarModal();
+                            });
                         } else {
                             datosQR.innerHTML += '<br><span class="text-danger">' + data + '</span>';
                         }

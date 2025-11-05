@@ -101,6 +101,8 @@
                     /*USANDO EL METODO DEL ARCHIVO enviarCorreo.php 2025-10-15 */
                     include_once __DIR__ . '/../../public/PHP/repositorioPHPMailer/enviarCorreo.php';
                     enviarCorreoAlumno($Alumno, $rutaQR->getString());
+                    echo "<script>mostrarRegistroAlumno();</script>";
+                    echo "<script>mostrarQREnviado();</script>";
                     //echo "<h2 style='color: green;'>Registro exitoso</h2>";
                 } else {
                     //echo "<h2 style='color: red;'>Registro fallido</h2>";
