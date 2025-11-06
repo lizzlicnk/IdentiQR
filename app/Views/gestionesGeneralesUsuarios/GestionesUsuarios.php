@@ -63,8 +63,6 @@
 
     </head>
     <body>
-
-
         <!-- !Aquí se encontrara el emcabezado, este podrá cambiar: nota-->
         <header id="HeaderIndex1">
             <div class="container__header">

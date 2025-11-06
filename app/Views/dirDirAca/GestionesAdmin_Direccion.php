@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/jpg" href="Media/img/Favicon.ico"/> <!--FAVICON-->
+        <link rel="shortcut icon" href="/IdentiQR/public/Media/img/Favicon.ico" type="image/x-icon"> <!--FAVICON-->
         <title>DireccionACADEMICA_IdentiQR</title>
 
         <!--TODO: Aquí se tendra que pasar a CSS-->
@@ -14,12 +14,12 @@
         <header id="HeaderIndex1">
             <div class="container__header">
                 <div class="logo">
-                    <img src="Media/img/IdentiQR-Eslogan-SinFonde.png" alt="Banner-IdentiQR" weight="200" height="200">
+                    <img src="/IdentiQR/public/Media/img/IdentiQR-Eslogan-SinFonde.png" alt="Banner-IdentiQR" weight="200" height="200">
                 </div>
                 <div class="container__nav">
                     <nav id="nav">
                         <ul>
-                            <li><a href="index.html" class="select">INICIO</a></li>
+                            <li><a href="/IdentiQR/index.html" class="select">INICIO</a></li>
                             <li><a href="#">TEMAS</a></li>
                             <li><a href="#">CONTACTOS</a></li>
                         </ul>

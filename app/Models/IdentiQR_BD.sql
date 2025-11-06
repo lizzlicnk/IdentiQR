@@ -225,8 +225,16 @@ begin
 end //
 
 /*Inserciones dentro de la tabla de Usuario*/
-INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R', 'identiqr.info@gmail.com', 'IdentiQR_Admin', 'Administrador',1);
+/*Usuarios generados para cada DIRECCIÓN*/
+INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R', 'identiqr.info@gmail.com', 'IdentiQR_Admin', 'Administrador',1); /*Admin*/
+INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R_Dir', 'identiQR.info_Dir@identiqr.com', 'IdentiQR_Dir', 'Administrativo_Direccion',2);/*Dirección - IQR2025-72*/
+INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R_ServEsco', 'identiQR.info_ServEsco@identiqr.com', 'IdentiQR_ServEsco', 'Administrativo_ServicioEsco',3);/*Serv Esco - IQO2025-72*/
+INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R_DDA', 'identiQR.info_DDA@identiqr.com', 'IdentiQR_DDA', 'Administrativo_DesaAca',4);/*DDA - IQA2025-72*/
+INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R_DAE', 'identiQR.info_DAE@identiqr.com', 'IdentiQR_DAE', 'Administrativo_DAE',5);/*DAE - IQE2025-72*/
+INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R_Med', 'identiQR.info_Med@identiqr.com', 'IdentiQR_Med', 'Administrativo_Medico',6);/*Med - IQD2025-72*/
+INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R_Vinc', 'identiQR.info_Vinc@identiqr.com', 'IdentiQR_Vinc', 'Administrativo_Vinculacion',7);/*Vinc - IQC2025-72*/
 
+select * from departamento;
 /* DISPARADOR PARA EL REGISTRO DE LA CONTRASEÑA INICIAL - Falta*/
 
 /*Disparadores para agilizar el procedimiento de ASIGNACIÓNDE HASH a los alumnos*/

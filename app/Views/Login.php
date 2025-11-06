@@ -12,10 +12,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/jpg" href="/IdentiQR/public/Media/img/Favicon.ico"/> <!--FAVICON-->
         <title>Login_IdentiQR</title>
+        <link rel="icon" type="image/jpg" href="/IdentiQR/public/Media/img/Favicon.ico"/> <!--FAVICON-->
         <link rel="stylesheet" href="/IdentiQR/public/CSS/stylesLogin.css"> <!--CSS-->
-        
     </head>
     <body>
         <!-- !Aquí se encontrara el emcabezado, este podrá cambiar: nota-->
@@ -49,7 +48,7 @@
         <main>
             <div class="Login_ContenedorGeneral">
                 <h2>Iniciar Sesión</h2>
-                <form action="../Controllers/ControladorUsuario.php?action=loginUsuario" method="POST">
+                <form action="/IdentiQR/app/Controllers/ControladorUsuario.php?action=loginUsuario" method="POST">
                     <fieldset>
                         <legend>Ingresa tus credenciales</legend>
                         <label for="usuario">Usuario</label>

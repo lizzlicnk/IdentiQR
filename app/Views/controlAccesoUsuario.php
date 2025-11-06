@@ -18,12 +18,12 @@
         "Administrador" => "GestionesAdministradorG.php",
         "Administrativo_Vinculacion" => "dirVinculacion/GestionesAdminVinculacion.php",
         "Administrativo_ServicioEsco" => "dirServEsco/GestionesAdmin_ServEsco.php",
-        "Administrativo_DesaAca" => "dirDDAGestionesAdmin_DesaAca.php",
+        "Administrativo_DesaAca" => "dirDDA/GestionesAdmin_DesaAca.php",
         "Administrativo_DAE" => "dirDAE/GestionesAdmin_DAE.php",
         "Administrativo_Direccion" => "dirDirAca/GestionesAdmin_Direccion.php",
         "Administrativo_Medico" => "dirMedica/GestionesAdmin_Medico.php"
     ];
-    $urlDestino = $destinos[$rol] ?? '../../index.php';
+    $urlDestino = $destinos[$rol] ?? '/IdentiQR/index.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -31,8 +31,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirigiendo... - IdentiQR</title>
-
+    <link rel="shortcut icon" href="/IdentiQR/public/Media/img/Favicon.ico" type="image/x-icon"> <!--FAVICON-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!--FALTA IMPLEMENTAR EL CODIGO EN CSS (ARCH. APARTE)-->
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -219,7 +221,7 @@
             <header class="redirect-header">
                 <div class="header-title">
                     <i class="bi bi-shield-check"></i>
-                    <img src="../../public/Media/img/IdentiQR-Eslogan-Fondo.png" alt="Logo IdentiQR" weight = "80" height="80">
+                    <img src="/IdentiQR/public/Media/img/IdentiQR-Eslogan-Fondo.png" alt="Logo IdentiQR" weight = "80" height="80">
                     <span>IdentiQR</span>
                 </div>
                 <a href="login.php" class="btn-regresar">Regresar</a> 
