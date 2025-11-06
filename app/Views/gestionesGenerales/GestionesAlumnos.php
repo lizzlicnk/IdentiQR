@@ -11,8 +11,9 @@
         <link rel="stylesheet" href="/IdentiQR/public/CSS/gestionesAlumnos.css"> <!--CSS-->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        <script src="/IdentiQR/public/JavaScript/gestionesAlumnos.js"></script> <!-- JS -->
+
         <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+        <script src="/IdentiQR/public/JavaScript/gestionesAlumnos.js"></script> <!-- JS -->
         <!--*: Da formato frente para el registro - MODIFICAR-->
         <title>IdentiQR</title>
     </head>
@@ -298,8 +299,9 @@
                     <!--*: Implementar modulo para escanear el QR aquí y verificar-->
                     <label for="Matricula">Matricula: </label>
                         <input type="text" id="idAlumno_BajaUSUARIO" name="idAlumno_BajaUSUARIO" placeholder="MATO250###" required>
-                        <button type="submit" name="BajaAlumno_EliminarUsuario" id="BajaAlumno_EliminarUsuario">
-                            Eliminar Alumno</button>
+                    <input type="hidden" name="accionEliminar" value="eliminarAlumno">
+                        <button type="submit" name="BajaAlumno_EliminarUsuario" id="BajaAlumno_EliminarUsuario" 
+                        onclick = "return confirmacionEliminacionAlumno(event)">Eliminar Alumno</button>
                 </fieldset>
             </form>
         </section>
@@ -333,6 +335,18 @@
             </div>
         </footer>
 
+        <?php if (isset($resultadoExito) && $resultadoExito === true): ?>
+            <script>
+                // Llamar a tu función JS que muestra la alerta de éxito
+                mostrarAlerta('success', '<?php echo addslashes($mensaje); ?>');
+            </script>
+        <?php elseif (isset($resultadoExito) && $resultadoExito === false): ?>
+            <script>
+                // Llamar a tu función JS que muestra la alerta de error
+                mostrarAlerta('error', '<?php echo addslashes($mensaje); ?>');
+            </script>
+        <?php endif; ?>
+
         <!-- Modal -->
         <div id="modalEscanear" class="modal" style="display: none;">
             <div class="modal-dialog modal-xl">
@@ -364,7 +378,7 @@
                 </div>
             </div>
         </div>
-
+        <!--
         <script>
             let scanner = null;
             let video = document.getElementById('video');
@@ -482,5 +496,6 @@
                 }
             }
         </script>
+    -->
     </body>
 </html>
