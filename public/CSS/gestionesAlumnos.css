@@ -152,6 +152,12 @@ fieldset {
     padding: 20px;
     margin-bottom: 20px;
     background: #fafafa;
+    text-align: center;
+}
+
+fieldset button, fieldset input[type="submit"] {
+    display: inline-block;
+    margin: 0 auto;
 }
 
 legend {
@@ -308,6 +314,9 @@ footer {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     animation: fadeIn 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes fadeIn {
@@ -317,11 +326,13 @@ footer {
 
 .modal-content {
     background-color: #fff;
-    margin: 5% auto;
+    margin: auto;
     padding: 20px;
     border-radius: 10px;
-    width: 90%;
-    max-width: 800px;
+    width: 95%;
+    max-width: 1400px;
+    max-height: 90vh;
+    overflow-y: auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -335,6 +346,22 @@ footer {
 
 .close:hover {
     color: #000;
+}
+
+/* Estilos para los botones en datosQR */
+#datosQR button {
+    margin: 5px;
+    display: inline-block;
+}
+
+/* Estilos para el video de la cámara */
+#video {
+    width: 100%;
+    height: 400px;
+    border: 10px solid #007bff;
+    border-radius: 5px;
+    align-items: center;
+    align-content: center;
 }
 
 /* Responsive */

@@ -64,12 +64,14 @@
                     <hr>
                     <div class="form-group row">
                         <label for="Matricula">Matricula</label>
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fa fa-address-card"></i>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-address-card"></i>
+                                </div>
                             </div>
+                            <input type="text" id="matricula" name="matricula" required>
                         </div>
-                        <input type="text" id="matricula" name="matricula" required>
                     </div>
                     <br>
                     <div class="form-group row">
@@ -190,7 +192,7 @@
                 </fieldset>
                 <!--Este será el boton para enviar los datos-->
                 <div class="form-group row">
-                    <div class="offset-4 col-8">
+                    <div class="col-12 text-center">
                         <input type="submit" name="Enviar_Alumno" value = "Enviar_Alumno"  class="btn btn-primary" onclick = "registroAlumno()">
                     </div>
                 </div>
@@ -360,13 +362,13 @@
                             <!-- Sección Izquierda: Cámara -->
                             <div class="camera-section" style="flex: 1;">
                                 <h6 class="text-center">Cámara</h6>
-                                <video id="video" style="width: 100%; max-width: 400px; border: 2px solid #007bff; border-radius: 5px;"></video>
+                                <video id="video" style="width: 100%; border: 2px solid #be00f3ff; border-radius: 5px;"></video>
                                 <div id="estado" class="mt-3 text-center"></div>
                             </div>
                             <!-- Sección Derecha: Datos Escaneados -->
                             <div class="data-section" style="flex: 1;">
                                 <h6 class="text-center">Datos Escaneados</h6>
-                                <div id="datosQR" style="background-color: #e9ecef; padding: 15px; border-radius: 5px; height: 300px; overflow-y: auto;">
+                                <div id="datosQR" style="background-color: #e9ecef; padding: 15px; border-radius: 5px; min-height: 300px; max-height: 500px; overflow-y: auto;">
                                     <p class="text-muted">Acerque el Código QR a escanear.</p>
                                 </div>
                             </div>

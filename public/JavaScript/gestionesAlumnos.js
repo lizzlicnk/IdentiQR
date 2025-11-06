@@ -251,7 +251,7 @@ function confirmacionEliminacionAlumno(event){
 
         if (data.includes('redirect:')) {
             const url = data.split('redirect:')[1];
-            datosQR.innerHTML += '<br><p>¿Desea proceder con la redirección?</p>';
+            datosQR.innerHTML += '<br><p>¿Desea proceder con la redirección a Modificación?</p>';
             datosQR.innerHTML += '<button id="aceptarBtn" class="btn btn-success">Aceptar</button> ';
             datosQR.innerHTML += '<button id="cancelarBtn" class="btn btn-danger">Cancelar</button> ';
             datosQR.innerHTML += '<button id="usarMatriculaBtn" class="btn btn-info">Solamente usar Matricula</button>';
