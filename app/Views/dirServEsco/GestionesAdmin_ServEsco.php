@@ -5,9 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/IdentiQR/public/Media/img/Favicon.ico" type="image/x-icon"> <!--FAVICON-->
+        <link rel="stylesheet" href="/IdentiQR/public/CSS/gestionesDirecciones.css">
         <title>DeptoServEsco_IdentiQR</title>
-
-        <!--TODO: Aquí se tendra que pasar a CSS-->
     </head>
     <body>
         <!-- !Aquí se encontrara el emcabezado, este podrá cambiar: nota-->

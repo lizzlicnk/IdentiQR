@@ -1,0 +1,221 @@
+/* Estilos para las páginas de gestión de direcciones (GestionesAdmin_Direccion.php, GestionesAdmin_ServEsco.php, etc.) */
+/* Paleta de colores: Morado (#6e0990), Rojo (#d43e1d), Amarillo (#f6ac35) */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    background: linear-gradient(135deg, #f4f4f4 0%, #e9ecef 100%);
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #f6ac35 0%, #ffb74d 100%);
+    min-height: 110px;
+    margin: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    padding: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 200px;
+    width: 400px;
+    margin-left: 20px;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+.container__nav {
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    margin-top: 16px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 18px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+nav a:hover {
+    color: #d43e1d;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Título principal */
+#HeaderLogin h2 {
+    text-align: center;
+    color: #6e0990;
+    font-size: 2.5em;
+    margin: 20px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor central */
+.contenedorCentral {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Secciones */
+section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-5px);
+}
+
+section h2 {
+    color: #f6ac35;
+    border-bottom: 3px solid #6e0990;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+section a {
+    display: inline-block;
+    margin: 10px 15px;
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #6e0990 0%, #8e24aa 100%);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+section a:hover {
+    background: linear-gradient(90deg, #d43e1d 0%, #f6ac35 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 18px 0;
+    background: #701875;
+    color: #fff;
+    margin-top: 48px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    border-top: 1px solid #eaeaea;
+    min-width: 100px;
+    height: auto;
+    padding: 2rem 0;
+}
+
+.footer__container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer__container p {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+}
+
+.footer__info, .footer__links, .footer__terms {
+    flex: 1 1 300px;
+    margin: 10px;
+}
+
+.footer__links a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+}
+
+.footer__links a:hover {
+    text-decoration: underline;
+    border-color: #6e0990;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container__header {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .logo img {
+        height: 150px;
+        width: 300px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .contenedorCentral {
+        padding: 10px;
+    }
+
+    section {
+        padding: 15px;
+    }
+}

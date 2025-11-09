@@ -7,7 +7,7 @@
     $bd="IdentiQR";
 
     //GENERAMOS LA CONEXION CON EL SERVIDOR
-    $conn= new mysqli($host,$user,$pw,$bd);
+    $conn = new mysqli($host,$user,$pw,$bd);
     if(!$conn){
         die("Error en la conexion: ".mysqli_connect_error());
     } else{ 

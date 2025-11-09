@@ -85,7 +85,7 @@
                     <!--*:  Aquí se van a incluir todos los tramites que se pueden realizar (Desto todos los departamentos)-->
                     <div id = "card-Dir">
                         <legend>Dirección Academica</legend>
-                        <a href="dirDirAca/gestionJustificantes_Dir.php">Justificantes_DirecciónAcademica</a>
+                        <a href="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php">Gestión Dirección Acádemica - Justificantes_DirecciónAcademica</a>
                         <!-- <a href="gestionRecursamiento_Dir.html">Recursamiento_DirecciónAcademica</a> -->
                     </div>
                     <hr>

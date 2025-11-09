@@ -192,6 +192,35 @@
             return null;
         }
 
+        public function recuperarDatosAlumnoPorMatricula(string $matricula){
+            $sql_statement = "
+                SELECT 
+                    a.*, 
+                    c.*, 
+                    im.*, 
+                    calcCuatrimestre(a.FeIngreso) AS Cuatri
+                FROM alumno a
+                LEFT JOIN carrera c ON a.idCarrera = c.idCarrera
+                LEFT JOIN informacionmedica im ON a.Matricula = im.Matricula
+                WHERE a.Matricula = ?;
+            ";
+
+            $statement = $this->conn->prepare($sql_statement);
+            if (!$statement) {
+                die("Connection_BD->recuperarDatosAlumnoPorMatricula prepare error: " . $this->conn->error);
+            }
+
+            $statement->bind_param("s", $matricula);
+            $statement->execute();
+            $result = $statement->get_result();
+
+            if ($result && $result->num_rows > 0) {
+                return $result->fetch_assoc();
+            }
+            //Si no encuentra registros, retorna NULL
+            return null;
+        }
+
         public function obtenerTodosAlumnos(){
             $sql_statement = "SELECT a.Matricula, a.Nombre, a.ApePat, a.ApeMat, calcCuatrimestre(a.FeIngreso) as Cuatrimestre, a.FechaNac, a.Correo, im.TipoSangre FROM Alumno a LEFT JOIN InformacionMedica im ON a.Matricula = im.Matricula";
             

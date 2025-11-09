@@ -8,8 +8,9 @@
         }
 
         /*Funciones para generar los tramites.*/
-        public function registrarTramite(){
-            $sql_statement = "INSERT INTO registroservicio (Matricula,idTramite,descripcion,estatusT) VALUES (?,?,?,?)";
+        public function registrarTramite($Matricula,$idTramite,$descripcion){
+            //$sql_statement = "INSERT INTO registroservicio (Matricula,idTramite,descripcion,estatusT) VALUES (?,?,?,?)";
+            $sql_statement = "INSERT INTO registroservicio (Matricula,idTramite,descripcion) VALUES (?,?,?)";
 
             $stmt = $this->conn->prepare($sql_statement);
             if (!$stmt) {
@@ -24,7 +25,8 @@
             $estatusT = $unTramite->getEstatusT();
             */
             /*PASAMOS LOS PARAMETROS - CON VARIABLES*/
-            $stmt->bind_param("siss",$Matricula,$idTramite,$descripcion,$estatusT);
+            //$stmt->bind_param("siss",$Matricula,$idTramite,$descripcion,$estatusT);
+            $stmt->bind_param("sis",$Matricula,$idTramite,$descripcion);
             return ($stmt->execute()); //Retornamos la ejecución.
         }
 
@@ -35,38 +37,98 @@
             $result = $this -> connection -> query($sql_statement);
             return $result; //Regresa el resultado de la consulta
         }
-        //Realiza una consulta GENERAL a toda la tabla, DONDE se encuentren con un DEPARTAMENTO ESPECIFICO
-        public function consultarTramitesPorDEPTO($Matricula){
+        
+        //Realiza una consulta GENERAL a toda la tabla, DONDE se encuentren con un ALUMNO ESPECIFICO
+        public function consultarTramitesPorMatricula($Matricula){
             $sql_statement = "SELECT * FROM registroservicio
                             WHERE Matricula = ? ORDER BY registroservicio.FechaHora DESC;";
-            $statement = $this -> connection -> prepare($sql_statement);
-
-            $statement -> bind_param("i", $Matricula);
-            $statement -> execute();
-            $result = $stmt->get_result();
-            //$rows = $result->fetch_all(MYSQLI_ASSOC);
-            return $result; //Regresa el resultado de la consulta
-            //return $rows;
-        }
-        //Realiza una consulta especifica a un TRAMITE dentro de la tabla
-        public function consultarTramitePorID($Folio){
-            //Lógica para la aplicación dentro de la base de datos
-            $sql_statement = "SELECT * FROM registroservicio where (FolioRegistro = ?) or (FolioSeguimiento = ?)";
-            $statement = $this -> connection -> prepare($sql_statement);
-            //Validar si el $Folio es numerico
-            if(is_numeric($Folio)){
-                $FolioRegistro = $Folio;
+            $statement = $this->conn->prepare($sql_statement);
+            
+            if (!$statement) {
+                throw new Exception("Error en prepare(): " . $this->conn->error);
             }
 
-            $statement -> bind_param("is", $FolioRegistro, $Folio);
-            $statement -> execute();
-            $result = $statement -> get_result();
-            return ($result -> fetch_assoc()); //Regresa un solo registro como un arreglo asociativo
+            $statement->bind_param("s", $Matricula);
+            
+            if (!$statement->execute()) {
+                throw new Exception("Error en execute(): " . $statement->error);
+            }
+            
+            $result = $statement->get_result();
+            return $result; //Regresa el resultado de la consulta
+        }
+        //Realiza una consulta GENERAL a toda la tabla, DONDE se encuentren con un DEPARTAMENTO ESPECIFICO
+        public function consultarTramitesPorDepto($idDepto){
+            // SQL: unimos registroservicio con serviciotramite para filtrar por idDepto
+            $sql_statement = "SELECT registroservicio.* FROM registroservicio INNER JOIN serviciotramite
+                    ON registroservicio.idTramite = serviciotramite.idTramite
+                    WHERE serviciotramite.idDepto = ? ORDER BY registroservicio.FechaHora DESC;";
+
+            $statement = $this->conn->prepare($sql_statement);
+            if (!$statement) {
+                // Manejo de error si falla la preparación
+                throw new Exception("Error en prepare(): " . $this->conn->error);
+            }
+
+            // Asegurarse de que $idDepto sea entero
+            $idDepto = (int)$idDepto;
+            $statement->bind_param("i", $idDepto);
+
+            if (!$statement->execute()) {
+                // Manejo de error si falla la ejecución
+                throw new Exception("Error en execute(): " . $statement->error);
+            }
+            $result = $statement->get_result();
+            return $result; //Regresa el resultado de la consulta
+        }
+
+        public function consultarPorTipoTramite($idTramite){
+            //Lógica 
+            $sql_statement = "SELECT registroservicio.* FROM registroservicio INNER JOIN serviciotramite
+                    ON registroservicio.idTramite = serviciotramite.idTramite
+                    WHERE registroservicio.idTramite = ? ORDER BY registroservicio.FechaHora DESC;";
+            $statement = $this->conn->prepare($sql_statement);
+            if (!$statement) {
+                // Manejo de error si falla la preparación
+                throw new Exception("Error en prepare(): " . $this->conn->error);
+            }
+
+            // Asegurarse de que $idTramite sea entero
+            $idTramite = (int)$idTramite;
+            $statement->bind_param("i", $idTramite);
+
+            if (!$statement->execute()) {
+                // Manejo de error si falla la ejecución
+                throw new Exception("Error en execute(): " . $statement->error);
+            }
+            $result = $statement->get_result();
+            return $result; //Regresa el resultado de la consulta
+        }
+
+        //Realiza una consulta especifica a un TRAMITE dentro de la tabla por Folio
+        public function consultarTramitePorFolio($FolioRegistro){
+            $sql_statement = "SELECT * FROM registroservicio 
+                            WHERE FolioRegistro = ? OR FolioSeguimiento = ? 
+                            ORDER BY registroservicio.FechaHora DESC;";
+            $statement = $this->conn->prepare($sql_statement);
+            
+            if (!$statement) {
+                throw new Exception("Error en prepare(): " . $this->conn->error);
+            }
+
+            $statement->bind_param("ss", $FolioRegistro, $FolioRegistro);
+            
+            if (!$statement->execute()) {
+                throw new Exception("Error en execute(): " . $statement->error);
+            }
+            
+            $result = $statement->get_result();
+            return $result; //Regresa el resultado de la consulta
         }
         //Realiza una consulta GENERAL a toda la tabla, DONDE se haya realizado POR UN MISMO ALUMNO.
 
         /*Funciones para realizar las eliminaciones/bajas del tramite*/
-        public function cancelarTramite($FolioRegistro){
+        public function cancelarTramiteFR($FolioRegistro){
             $sql_statement = "CALL cancelarTramite(?,@eliminado)";
             $stmt = $this->conn->prepare($sql_statement);
             if (!$stmt) {
@@ -87,6 +149,37 @@
                 $stmt->close();
             }
             return 0;
+        }
+        public function cancelarTramiteFS($FolioSeguimiento){
+            $sql_statement = "CALL cancelarTramite2(?,@eliminado)";
+            $stmt = $this->conn->prepare($sql_statement);
+            if (!$stmt) {
+                echo("Connection_BD->cancelarTramite prepare error: " . $this->conn->errno);
+                return false;
+            }
+
+            $stmt->bind_param("s", $FolioSeguimiento);
+            if (!$stmt->execute()) {
+                echo("Connection_BD->cancelarTramite execute error: " . $stmt->error);
+                return false;
+            }
+            $stmt->close();
+
+            $res = $this->conn->query("SELECT @eliminado AS eliminado");
+            if ($res && $row = $res->fetch_assoc()) {
+                return (int)$row['eliminado'];
+                $stmt->close();
+            }
+            return 0;
+        }
+
+        /*Funciones para hacer el update*/
+        public function actualizarTramite($descripcion, $estatus, $FolioRegistro, $FolioSeguimiento){
+            $sql_statement = "UPDATE registroservicio set descripcion = ?, estatusT = ? where (FolioRegistro = ?) or (FolioSeguimiento = ?)";
+            //Crear el statement
+            $statement = $this -> conn -> prepare($sql_statement);
+            $statement -> bind_param("ssis", $descripcion, $estatus, $FolioRegistro, $FolioSeguimiento);
+            return $statement -> execute();
         }
     }
 

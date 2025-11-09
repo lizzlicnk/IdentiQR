@@ -1,0 +1,445 @@
+/* Estilos para las páginas de trámites de direcciones (gestionJustificantes_Dir.php, gestionDocumentosAlumnos.php, etc.) */
+/* Paleta de colores: Morado (#6e0990), Rojo (#d43e1d), Amarillo (#f6ac35) */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    background: linear-gradient(135deg, #f4f4f4 0%, #e9ecef 100%);
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #f6ac35 0%, #ffb74d 100%);
+    min-height: 110px;
+    margin: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    padding: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 200px;
+    width: 400px;
+    margin-left: 20px;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+.container__nav {
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    margin-top: 16px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 18px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+nav a:hover {
+    color: #d43e1d;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Título principal */
+#HeaderLogin h2 {
+    text-align: center;
+    color: #6e0990;
+    font-size: 2.5em;
+    margin: 20px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de gestión */
+#generarJustificante, #revisarJustificante, #eliminarJustificante {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#generarJustificante h2 {
+    text-align: center;
+    color: #f6ac35;
+    border-bottom: 3px solid #6e0990;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+/* Formularios */
+form {
+    margin-bottom: 30px;
+}
+
+fieldset {
+    border: 2px solid #f6ac35;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+    text-align: center;
+}
+
+legend {
+    color: #6e0990;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 0 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 600;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+    margin-bottom: 15px;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #6e0990;
+    box-shadow: 0 0 5px rgba(110, 9, 144, 0.5);
+}
+
+input[type="text"]:disabled {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+
+.btn {
+    background: linear-gradient(90deg, #f6ac35 0%, #ffb74d 100%);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 10px 5px;
+}
+
+.btn:hover {
+    background: linear-gradient(90deg, #d43e1d 0%, #f6ac35 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+    background: linear-gradient(90deg, #6e0990 0%, #8e24aa 100%);
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(90deg, #8e24aa 0%, #ba68c8 100%);
+}
+
+/* Botones específicos */
+input[type="submit"], button[type="button"] {
+    background: linear-gradient(90deg, #f6ac35 0%, #ffb74d 100%);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 10px 5px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+input[type="submit"]:hover, button[type="button"]:hover {
+    background: linear-gradient(90deg, #d43e1d 0%, #f6ac35 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    display: block;
+    white-space: nowrap;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: linear-gradient(90deg, #6e0990 0%, #8e24aa 100%);
+    color: #fff;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+tr:hover {
+    background: #f0f0f0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    background: linear-gradient(90deg, #701875 0%, #9c27b0 100%);
+    color: #fff;
+    margin-top: 48px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.footer__container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer__container p {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+}
+
+.footer__info, .footer__links, .footer__terms {
+    flex: 1 1 300px;
+    margin: 10px;
+}
+
+.footer__links a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer__links a:hover {
+    color: #f6ac35;
+    text-decoration: underline;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 95%;
+    max-width: 1400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+}
+
+/* Estilos para los botones en datosQR */
+#datosQR button {
+    margin: 5px;
+    display: inline-block;
+}
+
+/* Estilos para el video de la cámara */
+#video {
+    width: 100%;
+    height: 400px;
+    border: 10px solid #6e0990;
+    border-radius: 5px;
+    align-items: center;
+    align-content: center;
+}
+
+/* Estilos específicos para el fieldset de consultas */
+#revisarJustificante fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+}
+
+
+
+#revisarJustificante .opcionConsulta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fafafa;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+#revisarJustificante .opcionConsulta:hover {
+    background: #f6ac351a; /* Amarillo muy suave al pasar el mouse */
+}
+
+#revisarJustificante .opcionConsulta input[type="radio"] {
+    cursor: pointer;
+    accent-color: #6e0990; /* Color morado del tema */
+}
+
+#revisarJustificante .opcionConsulta label {
+    cursor: pointer;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container__header {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .logo img {
+        height: 150px;
+        width: 300px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #generarJustificante, #revisarJustificante, #eliminarJustificante {
+        padding: 10px;
+    }
+
+    fieldset {
+        padding: 15px;
+    }
+
+    #revisarJustificante fieldset {
+        padding: 10px 15px;
+        max-width: 100%;
+    }
+
+    #revisarJustificante fieldset label {
+        display: block;
+        margin: 8px 0;
+    }
+
+    #campoTodosConsulta,
+    #campoMatriculaConsulta,
+    #campoFolioConsulta,
+    #campoTramiteConsulta {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+}

@@ -254,10 +254,28 @@ delimiter //
 create trigger regisServ_Tramite before insert on registroservicio
 for each row
 begin
+	declare letras varchar(4);
+    declare tipoTram varchar(45);
 	set new.FechaHora = now();
-    #set new.FolioSeguimiento;
+    set tipoTram = (select Descripcion from serviciotramite where idTramite = new.idTramite);
+    
+	set letras = CONCAT(
+        char(FLOOR(RAND() * 26) + 65),
+        char(FLOOR(RAND() * 26) + 65),
+        char(FLOOR(RAND() * 26) + 65),
+        char(FLOOR(RAND() * 26) + 65)
+    );
+    
+    set new.FolioSeguimiento = concat(new.matricula,"-",year(curdate()),day(curdate()),substring(tipoTram,1,3),"-",letras);
 end //
 
+/*Disparador para agilizar la asignación de fechas cuando se registra la informaciónMedica*/
+delimiter //
+create trigger ingInfoMed_Medico before insert on informacionMedica
+for each row
+begin
+	set new.fechaIngreso_InfoMed = curdate();
+end //
 
 /* Procedimiento para agilizar la consulta de los diferentes usuarios que tendrán acceso al sistema*/
 delimiter //
@@ -336,6 +354,8 @@ BEGIN
     COMMIT;
 END //
 
+
+
 /*Funcion para agilizar la obtención de los cuatrimestres en los cuales se encuentra el alumno*/
 delimiter //
 create function calcCuatrimestre(feIngreso date) 
@@ -348,3 +368,16 @@ begin
     
     return c;
 end //
+
+/*CONSULTA - BORRAR*/
+SELECT 
+                    a.*, 
+                    c.*, 
+                    im.*, 
+                    calcCuatrimestre(a.FeIngreso) AS Cuatri
+                FROM alumno a
+                LEFT JOIN carrera c ON a.idCarrera = c.idCarrera
+                LEFT JOIN informacionmedica im ON a.Matricula = im.Matricula
+                WHERE a.Matricula = "SLAO230036";
+                
+                select * from registroservicio;
