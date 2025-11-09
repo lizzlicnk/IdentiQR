@@ -1,6 +1,5 @@
 <?php 
     //Incluir el controlador de la Dirección/Departamento correspondiente
-    //Incluir el controlador de la Dirección/Departamento correspondiente
     include_once "app/Controllers/ControladorAlumnos.php";
     include_once "app/Controllers/ControladorDirecciones.php";
     include_once "app/Controllers/ControladorUsuario.php";

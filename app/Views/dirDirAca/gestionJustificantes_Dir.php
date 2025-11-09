@@ -143,8 +143,8 @@
                         </select>
                         <input type="submit" value="Consultar por Trámite" name="consultarTramite_idTramite">
                     </div>
-                </form> 
-                    <br>
+                    </form> 
+                        <br>
                     <table border = "1">
                         <thead>
                             <th>FolioRegistro</th>
@@ -207,7 +207,7 @@
 
         <div id = "eliminarJustificante">
             <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=deleteFS" method="POST" onsubmit="return confirmarEliminacionFS(event)"> --> 
-                <form action="/IdentiQR/redireccionAcciones.php?action=deleteFS" method="POST" onsubmit="return confirmarEliminacionFS(event)">
+            <form action="/IdentiQR/redireccionAcciones.php?action=deleteFS" method="POST" onsubmit="return confirmarEliminacionFS(event)">
                 <fieldset>
                     <legend>Eliminar justificante por Folio de Seguimiento</legend>
                     <label for="FolioSeguimiento">Folio de Seguimiento a eliminar: </label>

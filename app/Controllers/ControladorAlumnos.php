@@ -257,4 +257,43 @@
         }
 
     }
+    /*Realizamos la instancia del metodo de inserción */
+    // Asegúrate que $conn exista
+    $db = new Connection_BD();
+    $conn = $db->getConnection();
+
+    if (!isset($db) || !$db) {
+        die("Error: La conexión a la base de datos no está definida.");
+    }
+
+    $controladorAlumno = new AlumnoController($conn);
+    if(isset($_GET['action'])){
+        $action = $_GET['action'];
+        switch($action){
+            case 'registroAlumno':
+                $controladorAlumno->insertarAlumno();
+                break;
+            case 'updateAlumno':
+                $controladorAlumno->actualizarAlumno();
+                break;
+            case 'obtenerAlumno':
+                $controladorAlumno->obtenerAlumno();
+                break;
+            case 'consultarAlumnos':
+                $controladorAlumno->consultarAlumnos();
+                break;
+            case 'eliminarAlumno':
+                $controladorAlumno->eliminarAlumno();
+                break;
+            case 'procesarQR':
+                $controladorAlumno->procesarQR();
+                break;
+            default:
+                header("Location: /IdentiQR/index.html");
+                exit();
+                break;
+        }
+    } else {
+        header("Location: /IdentiQR/app/Views/gestionesGenerales/GestionesAlumnos.php");
+    }
 ?>

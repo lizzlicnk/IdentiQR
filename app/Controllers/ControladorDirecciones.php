@@ -85,9 +85,9 @@
                     $insert = $this->directionModel -> registrarTramite($matricula, $idTramite, $descripcionTotal);
                     
                     if($insert){
-                        echo "<br>Registro exitoso";
+                        //echo "<br>Registro exitoso";
                     } else {
-                        echo "<br>Error en el registro";
+                        //echo "<br>Error en el registro";
                     }
                 } else {
                     echo "<br>Error: No se encontró el alumno con la matrícula proporcionada";

@@ -56,9 +56,9 @@
 
         <div class="contenedor-secciones">
             <section id="seccionRegistrarAlumno" class = "seccionRegistrarAlumno">
-            <!-- <form action = "../Controllers/ControladorAlumnos.php" method="POST" > -->
+                <!-- <form action = "../Controllers/ControladorAlumnos.php" method="POST" > -->
                 <form action = "/IdentiQR/app/Controllers/ControladorAlumnos.php?action=registroAlumno" method = "POST">
-                <fieldset>
+                    <fieldset>
                     <legend><h3>Formulario de Registro - Alta de alumno</h3></legend>
                     <p>Por favor, rellena este formulario para registrar un alumno.</p>
                     <hr>

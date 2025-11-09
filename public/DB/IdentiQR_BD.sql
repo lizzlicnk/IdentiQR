@@ -354,7 +354,20 @@ BEGIN
     COMMIT;
 END //
 
+delimiter //
+CREATE PROCEDURE cancelarTramite2(IN FS text, OUT eliminado INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SET eliminado = 0;
+    END;
 
+    START TRANSACTION;
+    DELETE FROM registroservicio WHERE (FolioSeguimiento = FS);
+    SET eliminado = ROW_COUNT(); -- número de filas afectadas
+    COMMIT;
+END //
 
 /*Funcion para agilizar la obtención de los cuatrimestres en los cuales se encuentra el alumno*/
 delimiter //
