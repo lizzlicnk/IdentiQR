@@ -12,6 +12,8 @@ if (!isset($_FILES['backupFile']) || $_FILES['backupFile']['error'] !== UPLOAD_E
     die("Error al subir el archivo. Código de error: " . ($_FILES['backupFile']['error'] ?? 'none'));
 }
 
+//mysql -u usuario -p -h 127.0.0.1 nombre_base_datos < ~/Downloads/backup20-9-22.sql
+
 $file = $_FILES['backupFile'];
 $filename = basename($file['name']);
 $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));

@@ -211,7 +211,7 @@
                 <fieldset>
                     <legend>Eliminar justificante por Folio de Seguimiento</legend>
                     <label for="FolioSeguimiento">Folio de Seguimiento a eliminar: </label>
-                    <input type="text" name="FolioSeguimiento" id="FolioSeguimiento" placeholder="Ej. 0001, 0002, etc." required>
+                    <input type="text" name="FolioSeguimiento" id="FolioSeguimiento" placeholder="Ej. MATRICULA-DATOS-4LETRAS etc. (Consultar en su vista)" required>
                     <input type="hidden" name="idDepto" value="2">
                     <br><br>
                     <input type="submit" value="Eliminar Trámite" name="BajaServicio_Tramite">

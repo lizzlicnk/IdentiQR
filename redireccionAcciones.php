@@ -22,6 +22,9 @@
         case 'dirDirAca':
             $controllerInstance = new DirectionsController($conn);
             break;
+        case 'dirDAE':
+            $controllerInstance = new DirectionsController($conn);
+            break;
         /*case 'alumno':
             $controllerInstance = new AlumnoController($conn);
             break;
@@ -49,12 +52,21 @@
                 $controllerInstance -> consultarTramitesPorDEPTO();
             }
             break;
+        /*Casos de update para direcciones */
         case 'update':
             $controllerInstance -> actualizarTramite();
             break;
         case 'updateManual':
             $controllerInstance -> actualizarTramiteManual();
             break;
+        case 'updateDAE':
+            $controllerInstance ->actualizarTramite();
+            break;
+        case 'updateManualDAE':
+            $controllerInstance -> actualizarTramiteManual();
+            break; 
+        /**************************************** */   
+
         case 'delete': //Eliminar por FolioRegistro (desde la tabla - si se necesita en el futuro)
             $controllerInstance -> bajaTramiteFR();
             break;
@@ -64,7 +76,8 @@
         case 'inicio':
             break;
         default:
-            echo "Error al encontrar el controlador";
+            //echo "Error al encontrar el controlador";
+            include "app/Views/index.html";
             //include "app/views/form_index.php";
             break;
     }

@@ -94,6 +94,79 @@
                 }
             }
             
+            //Validar que el boton fue enviado y tiene datos - dirDAE
+            if(isset($_POST['registrarTramite_dirDAE'])){
+                $matricula = $_POST['matriculaEscaneadoBD']; // Aquí se escaneara
+
+                $idTramite = (int)$_POST['idTramite'];
+                
+                $seleccionExtra = $_POST['seleccionExtra'];
+                /*AQUÍ SE RECUPERARAN LOS DATOS DEL ALUMNO. */
+                $resultDatos = $this->alumnoModel->recuperarDatosAlumnoPorMatricula($matricula);
+
+                /*Hacemos la validación para recuperar los datos*/
+                if($resultDatos){
+                    $Nombre_AUX         = $resultDatos['Nombre'];
+                    $ApePat_AUX         = $resultDatos['ApePat'];
+                    $ApeMat_AUX         = $resultDatos['ApeMat'];
+                    $FechaNac_AUX       = $resultDatos['FechaNac'];
+                    $FeIngreso_AUX      = $resultDatos['FeIngreso'];
+                    $Correo_AUX         = $resultDatos['Correo'];
+                    $Direccion_AUX      = $resultDatos['Direccion'];
+                    $Telefono_AUX       = $resultDatos['Telefono'];
+                    $Ciudad_AUX         = $resultDatos['Ciudad'];
+                    $Estado_AUX         = $resultDatos['Estado'];
+                    $Genero_AUX         = $resultDatos['Genero'];
+                    $idCarrera_AUX      = $resultDatos['idCarrera'];
+                    $DescripcionCarrera_AUX = $resultDatos['descripcion']; // de tabla carrera
+                    $PlanEstudios_AUX   = $resultDatos['planEstudios'];
+                    $idDepto_AUX        = $resultDatos['idDepto'];         // de tabla carrera
+                    $TipoSangre_AUX     = $resultDatos['TipoSangre'];
+                    $Alergias_AUX       = $resultDatos['Alergias'];
+                    $ContactoEmergencia_AUX = $resultDatos['contacto_emergencia'];
+                    $FechaIngresoInfoMed_AUX = $resultDatos['fechaIngreso_InfoMed'];
+                    $Cuatri_AUX          = $resultDatos['Cuatri'];          // función calcCuatrimestre()
+
+                    //Concatenación de datos
+                    $nombreCompleto = trim("$Nombre_AUX $ApePat_AUX $ApeMat_AUX");
+                    $requisitos = trim($Alergias_AUX. "- Sangre: $TipoSangre_AUX");
+
+                    //Validamos que tipo de servicio es
+                    switch($idTramite){
+                        case 5: 
+                            $tram = "Extracurricular";
+                            $fraseDia = "Solicitó unirse al extracurricular";
+                            break;
+                        default:
+                            $tram = "Extracurricular";
+                            $fraseDia = "Solicitó unirse al extracurricular";
+                            break;
+                    }
+
+                    // Generamos la descripción
+                    $descripcionTotal = sprintf(
+                        "El Alumno [%s] con matrícula [%s] del cuatrimestre [%s] de la carrera [%s] <%s> de [%s-%s]. Datos Médicos [$%s]",
+                        $nombreCompleto,
+                        $matricula,
+                        $Cuatri_AUX,
+                        $DescripcionCarrera_AUX,
+                        $fraseDia,
+                        $tram,
+                        $seleccionExtra,
+                        $requisitos
+                    );
+                    $insert = $this->directionModel -> registrarTramite($matricula, $idTramite, $descripcionTotal);
+                    
+                    if($insert){
+                        //echo "<br>Registro exitoso";
+                    } else {
+                        //echo "<br>Error en el registro";
+                    }
+                } else {
+                    echo "<br>Error: No se encontró el alumno con la matrícula proporcionada";
+                }
+            }
+
             //Incluimos la vista
             include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
         }
@@ -104,12 +177,11 @@
         //2.1. Funcion para consultar TODOS LOS TRAMITES por DEPARTAMENTO
         public function consultarTramitesPorDEPTO(){
             $direccion = null; // default: null
-            $idDepto = 2; // default: Dirección Académica
-            
+            $idDepto = (int)($_POST['idDepto'] ?? $_GET['idDepto'] ?? 2);
+                        
             if(isset($_POST['consultarTramite_Depto'])){
                 // Obtener idDepto del POST o usar el valor por defecto
                 $idDepto = isset($_POST['idDepto']) ? (int)$_POST['idDepto'] : 2;
-                
                 // Llamada al modelo (devuelve mysqli_result)
                 $direccion = $this->directionModel->consultarTramitesPorDepto($idDepto);
             }
@@ -118,6 +190,39 @@
             switch($idDepto){
                 case 2:
                     include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
+                    break;
+                case 3:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosServEsco.php');
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosDAE.php');
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                default:
+                    include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
+                    break;
+            }
+            //Evaluamos que tipo de direccion es para Incluirlo
+            switch($idDepto){
+                case 2:
+                    include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
+                    break;
+                case 3:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosServEsco.php');
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosDAE.php');
+                    break;
+                case 6:
+                    break;
+                case 7:
                     break;
                 default:
                     include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
@@ -143,8 +248,20 @@
                 case 2:
                     include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
                     break;
+                case 3:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosServEsco.php');
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosDAE.php');
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
                 default:
-                    include_once(__DIR__ . '/../Views/dirDirAca/GestionesAdmin_Direccion.php'); //Vista de justificantes
+                    include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
                     break;
             }
         }
@@ -168,8 +285,20 @@
                 case 2:
                     include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
                     break;
+                case 3:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosServEsco.php');
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosDAE.php');
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
                 default:
-                    include_once(__DIR__ . '/../Views/dirDirAca/GestionesAdmin_Direccion.php'); //Vista de justificantes
+                    include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
                     break;
             }
         }
@@ -193,8 +322,20 @@
                 case 2:
                     include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
                     break;
+                case 3:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosServEsco.php');
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosDAE.php');
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
                 default:
-                    include_once(__DIR__ . '/../Views/dirDirAca/GestionesAdmin_Direccion.php'); //Vista de justificantes
+                    include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
                     break;
             }
         }
@@ -202,10 +343,9 @@
         /*Funcion para realizar la actualización de datos dentro del Tramite*/
         public function actualizarTramite(){
             $row = null;
+            $idDepto = (int)($_POST['idDepto'] ?? $_GET['idDepto'] ?? 1);
             if(isset($_GET['Folio'])){
                 $FolioRegistro = $_GET['Folio'];
-                $idDepto = isset($_GET['idDepto']) ? (int)$_GET['idDepto'] : 2;
-
                 //Llamar al metodo del modelo para hacer la consulta
                 $result = $this->directionModel->consultarTramitePorFolio($FolioRegistro);
                 
@@ -218,6 +358,17 @@
                 switch($idDepto){
                     case 2:
                         include_once(__DIR__ . '/../Views/dirDirAca/modificacionTramite.php');
+                        break;
+                    case 3:
+                        break;
+                    case 4 :
+                        break;
+                    case 5:
+                        include_once(__DIR__ . '/../Views/dirDAE/modificacionTramite.php');
+                        break;
+                    case 6 :
+                        break;
+                    case 7:
                         break;
                     default:
                         include_once(__DIR__ . '/../Views/dirDirAca/GestionesAdmin_Direccion.php'); //Vista de justificantes
@@ -226,6 +377,7 @@
                 return;
             }
             //ENVIAR INFO
+            $redireccion_error_base = "/IdentiQR/index.html";
             if(isset($_POST['actualizarTramite_Tramite'])){
                 $FolioRegistro = $_POST['FolioRegistro'];
                 $FolioSeguimiento = $_POST['FolioSeguimiento'];
@@ -234,27 +386,67 @@
 
                 $update = $this -> directionModel -> actualizarTramite($Descripcion, $estatusT, $FolioRegistro, $FolioSeguimiento);
                 if($update){
-                    /*switch($idDepto){
-                    case 2:
-                        include_once(__DIR__ . '/../Views/dirDirAca/modificacionTramite.php');
-                        break;
-                    default:
-                        include_once(__DIR__ . '/../Views/dirDirAca/GestionesAdmin_Direccion.php'); //Vista de justificantes
-                        break;
-                    }*/
-                    header("Location: /IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult");
+                    switch($idDepto){
+                        case 2:
+                            //$redireccion = "/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=update";
+                            header("Location: /IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult");
+                            exit();
+                            break;
+                        case 3:
+                            //$redireccion = "/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=update";
+
+                            exit();
+                            break;
+                        case 4 :
+                            //$redireccion = "/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=update";
+
+                            exit();
+                            break;
+                        case 5:
+                            //$redireccion = "/IdentiQR/app/Views/dirDAE/GestionesAdmin_DAE.php?action=consult";
+                            header("Location: /IdentiQR/app/Views/dirDAE/GestionesAdmin_DAE.php?action=consult");
+                            exit();
+                            break;
+                        case 6 :
+                            //$redireccion = "/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=update";
+
+                            exit();
+                            break;
+                        case 7:
+                            //$redireccion = "/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=update";
+
+                            exit();
+                            break;
+                        default:
+                            include_once(__DIR__ . '/../Views/dirDirAca/GestionesAdmin_Direccion.php'); //Vista de justificantes
+                            break;
+                    }
                 } else {
-                    header("Location: /IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=update");
+                    // Redirección de ERROR (Volver al formulario de modificación con GET)
+                    $url_error = "";
+                    switch($idDepto){
+                        case 2:
+                            $url_error = "/IdentiQR/app/Views/dirDirAca/modificacionTramite.php?Folio=$FolioSeguimiento&idDepto=2&error=true";
+                            break;
+                        case 5:
+                            $url_error = "/IdentiQR/app/Views/dirDAE/modificacionTramite.php?Folio=$FolioSeguimiento&idDepto=5&error=true";
+                            break;
+                        default:
+                            $url_error = $redireccion_error_base;
+                            break;
+                    }
+                    header("Location: $url_error");
+                    exit(); 
                 }
             }
-            include_once(__DIR__ . '/../Views/dirDirAca/modificacionTramite.php');
+            //include_once(__DIR__ . '/../Views/dirDirAca/modificacionTramite.php');
         }
 
         public function actualizarTramiteManual(){
             $row = null;
             if(isset($_POST['Actualizar_Tramite'])){
                 $FolioRegistro = trim($_POST['FolioAct']);
-                $idDepto = isset($_GET['idDepto']) ? (int)$_GET['idDepto'] : 2;
+                $idDepto = (int)($_POST['idDepto'] ?? $_GET['idDepto'] ?? 1);
 
                 //Llamar al metodo del modelo para hacer la consulta
                 $result = $this->directionModel->consultarTramitePorFolio($FolioRegistro);
@@ -268,6 +460,9 @@
                 switch($idDepto){
                     case 2:
                         include_once(__DIR__ . '/../Views/dirDirAca/modificacionTramite.php');
+                        break;
+                    case 5:
+                        include_once(__DIR__ . '/../Views/dirDAE/modificacionTramite.php');
                         break;
                     default:
                         include_once(__DIR__ . '/../Views/dirDirAca/GestionesAdmin_Direccion.php'); //Vista de justificantes
@@ -303,16 +498,35 @@
         /*Funciones para realizar la baja de los servicios/tramites */
         //1. Baja por FolioRegistro (desde la tabla)
         public function bajaTramiteFR(){
+            $idDepto = (int)($_POST['idDepto'] ?? $_GET['idDepto'] ?? 1);
             if(isset($_GET['Folio'])){
                 $FolioRegistro = $_GET['Folio']; // Mantener como string para preservar los ceros
-                $idDepto = isset($_GET['idDepto']) ? (int)$_GET['idDepto'] : 2;
-
                 // Llamar al modelo para eliminar
                 $eliminado = $this->directionModel->cancelarTramiteFR($FolioRegistro);
                 
                 // Incluir la vista primero
                 $direccion = $this->directionModel->consultarTramitesPorDepto($idDepto);
-                include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
+                include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');//Evaluamos que tipo de direccion es para Incluirlo
+                switch($idDepto){
+                    case 2:
+                        include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
+                        break;
+                    case 3:
+                        include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosServEsco.php');
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosDAE.php');
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    default:
+                        include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
+                        break;
+                }
                 
                 // Mostrar mensaje después de cargar la vista
                 if($eliminado > 0){
@@ -340,17 +554,40 @@
         //2. Baja por FolioSeguimiento (desde el formulario)
         public function bajaTramiteFS(){
             $eliminado = 0;
+            $idDepto = (int)($_POST['idDepto'] ?? $_GET['idDepto'] ?? 1);
+            $redireccion = "/IdentiQR/index.html";
             
             if(isset($_POST['BajaServicio_Tramite']) || (isset($_POST['accionEliminar']) && $_POST['accionEliminar'] === 'eliminarTramite')){
                 $FolioSeguimiento = $_POST['FolioSeguimiento'];
-                $idDepto = isset($_POST['idDepto']) ? (int)$_POST['idDepto'] : 2;
 
                 // Llamar al modelo para eliminar
                 $eliminado = $this->directionModel->cancelarTramiteFS($FolioSeguimiento);
             }
             
             // Incluir la vista con el resultado
-            include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
+            //Evaluamos que tipo de direccion es para Incluirlo
+            switch($idDepto){
+                case 2:
+                    $redireccion = "/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult";
+                    include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
+                    break;
+                case 3:
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosServEsco.php');
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    $redireccion = "/IdentiQR/app/Views/dirDAE/GestionesAdmin_DAE.php?controller=dirDAE&action=consult";
+                    include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosDAE.php');
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                default:
+                    include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
+                    break;
+            }
             
             // Mostrar mensaje después de cargar la vista
             if($eliminado > 0){
@@ -361,7 +598,7 @@
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(function() {
-                        window.location.href = '/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult';
+                        window.location.href = '$redireccion';
                     });
                 </script>";
             } elseif(isset($_POST['BajaServicio_Tramite']) || isset($_POST['accionEliminar'])){

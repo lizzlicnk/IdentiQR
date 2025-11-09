@@ -99,7 +99,7 @@ nav a:hover {
 }
 
 /* Contenedor de gestión */
-#generarJustificante, #revisarJustificante, #modificarJustificante, #eliminarJustificante {
+#generarTramite, #revisarTramite, #modificarTramite, #eliminarTramite {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -109,7 +109,7 @@ nav a:hover {
     margin-top: 20px;
 }
 
-#generarJustificante h2 {
+#generarTramite h2 {
     text-align: center;
     color: #f6ac35;
     border-bottom: 3px solid #6e0990;
@@ -356,7 +356,7 @@ footer {
 }
 
 /* Estilos específicos para el fieldset de consultas */
-#revisarJustificante fieldset {
+#revisarTramite fieldset {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -365,7 +365,7 @@ footer {
     text-align: center;
 }
 
-#revisarJustificante .opcionConsulta {
+#revisarTramite .opcionConsulta {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -375,16 +375,16 @@ footer {
     transition: background 0.3s ease;
 }
 
-#revisarJustificante .opcionConsulta:hover {
+#revisarTramite .opcionConsulta:hover {
     background: #f6ac351a; /* Amarillo muy suave al pasar el mouse */
 }
 
-#revisarJustificante .opcionConsulta input[type="radio"] {
+#revisarTramite .opcionConsulta input[type="radio"] {
     cursor: pointer;
     accent-color: #6e0990; /* Color morado del tema */
 }
 
-#revisarJustificante .opcionConsulta label {
+#revisarTramite .opcionConsulta label {
     cursor: pointer;
     font-weight: 600;
     color: #333;
@@ -407,7 +407,7 @@ footer {
         gap: 10px;
     }
 
-    #generarJustificante, #revisarJustificante, #modificarJustificante, #eliminarJustificante {
+    #generarTramite, #revisarTramite, #modificarTramite, #eliminarTramite {
         padding: 10px;
     }
 
@@ -417,7 +417,7 @@ footer {
         max-width: 100%;
     }
 
-    #revisarJustificante fieldset label {
+    #revisarTramite fieldset label {
         display: block;
         margin: 8px 0;
     }
