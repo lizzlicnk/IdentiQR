@@ -224,36 +224,38 @@
         }
 
         public function eliminarAlumno(){
-            if(isset($_POST['BajaAlumno_EliminarUsuario']) or isset($_POST['accionEliminar']) && $_POST['accionEliminar'] === 'eliminarAlumno'){
+            $matricula = null;
+            
+            // Verificar si viene por GET (desde la tabla)
+            if(isset($_GET['matricula'])){
+                $matricula = $_GET['matricula'];
+            }
+            // Verificar si viene por POST (desde el formulario de eliminación)
+            elseif(isset($_POST['BajaAlumno_EliminarUsuario']) || (isset($_POST['accionEliminar']) && $_POST['accionEliminar'] === 'eliminarAlumno')){
                 $matricula = $_POST['idAlumno_BajaUSUARIO'];
-                if (empty($matricula) or $matricula === "") {
-                    // Si está vacío, definimos mensaje de error y resultado false
-                    $mensaje = "Debe proporcionar un usuario para eliminar.";
-                    $resultadoExito = false;
-                    
-                    include_once(__DIR__ . '/../Views/gestionesGenerales/GestionesAlumnos.php');
-                    exit();
-                }
-                //echo "<script>alert('Hola desde JavaScript: $credencial');</script>";
-                //$mensaje = "Hola desde JavaScript: $credencial";
-                //Consulta para ver si sirve de algo
-                $rowsDeleted = $this -> modelAlumno -> eliminarAlumno($matricula);
-                if($rowsDeleted >= 1){
-                    //$mensaje = "La eliminación del usuario ".$credencial." fue correcta.";
-                    //header("Location: /IdentiQR/app/Controllers/ControladorUsuario.php?action=consultarUsuario&msg=UsuarioEliminado");
-                    //exit();
-                    $mensaje = "La eliminación del Alumno con matricula [". $matricula ."]fue correcta.";
-                    $resultadoExito = true;
-                } else {
-                    // Si falla, mostrar mensaje o redirigir con error
-                    //header("Location: /IdentiQR/app/Controllers/ControladorUsuario.php?action=consultarUsuario&error=1");
-                    //exit();
-                    $mensaje = "Error al eliminar el usuario.";
-                    $resultadoExito = false;
-                }
+            }
+            
+            // Validar que se haya recibido una matrícula
+            if (empty($matricula) || $matricula === "") {
+                $mensaje = "Debe proporcionar una matrícula para eliminar.";
+                $resultadoExito = false;
                 include_once(__DIR__ . '/../Views/gestionesGenerales/GestionesAlumnos.php');
                 exit();
             }
+            
+            // Realizar la eliminación
+            $rowsDeleted = $this->modelAlumno->eliminarAlumno($matricula);
+            
+            if($rowsDeleted >= 1){
+                $mensaje = "La eliminación del Alumno con matrícula [". $matricula ."] fue correcta.";
+                $resultadoExito = true;
+            } else {
+                $mensaje = "Error al eliminar el alumno.";
+                $resultadoExito = false;
+            }
+            
+            include_once(__DIR__ . '/../Views/gestionesGenerales/GestionesAlumnos.php');
+            exit();
         }
 
     }

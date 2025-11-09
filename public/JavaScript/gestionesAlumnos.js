@@ -52,6 +52,17 @@ function registroAlumno(){
         showConfirmButton: false
     });
 }
+/*2.4 Alerta de eliminación o lo que se haya hecho */
+function mostrarAlerta(tipo, mensaje) {
+    Swal.fire({
+        icon: tipo,
+        title: tipo === 'success' ? '¡Éxito!' : 'Error',
+        text: mensaje,
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false
+    });
+}
 
 
 /*4. MENSAJES DE NOTIIFCACIONES DE ELIMINACIÓN */
@@ -85,6 +96,38 @@ function confirmacionEliminacionAlumno(event){
     });
 
     // Retornamos false para prevenir el submit normal
+    return false;
+}
+
+/*4.1. CONFIRMACIÓN DE ELIMINACIÓN DESDE LA TABLA */
+function confirmacionEliminacionAlumnoTabla(event, matricula) {
+    event.preventDefault();  // Prevenir cualquier acción por defecto
+    
+    if (!matricula || matricula.trim() === '') {
+        Swal.fire({
+            title: "Error",
+            text: "No se pudo obtener la matrícula del alumno.",
+            icon: "error"
+        });
+        return false;
+    }
+    
+    Swal.fire({
+        title: "¿Desea eliminar este alumno?",
+        text: `Matrícula: ${matricula}\n¡No podrás revertir esta acción!`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Redirigir al controlador con GET
+            window.location.href = `/IdentiQR/app/Controllers/ControladorAlumnos.php?action=eliminarAlumno&matricula=${encodeURIComponent(matricula)}`;
+        }
+    });
+    
     return false;
 }
 

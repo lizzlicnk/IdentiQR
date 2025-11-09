@@ -270,9 +270,12 @@
                                 <td><?php echo $row['Correo'] ?></td>
                                 <td>
                                     <a href="/IdentiQR/app/Controllers/ControladorAlumnos.php?action=obtenerAlumno&matricula=<?php echo $row['Matricula']?>">
-                                        <button>Editar</button>
+                                        <button type="button">Editar</button>
                                     </a>
-                                    <!--FALTA INCLUIR EL ELIMINADO-->
+                                    <button type="button" 
+                                            onclick="confirmacionEliminacionAlumnoTabla(event, '<?php echo $row['Matricula']?>')">
+                                        Eliminar
+                                    </button>
                                 </td>
                             </tr>
                         <?php
