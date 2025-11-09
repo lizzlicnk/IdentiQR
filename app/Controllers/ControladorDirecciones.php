@@ -95,8 +95,7 @@
             }
             
             //Incluimos la vista
-            include_once(__DIR__ . '/../Views/dirDirAca/GestionesAdmin_Direccion.php'); //Vista de justificantes
-            //include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php'); //Vista de justificantes
+            include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
         }
 
         
@@ -254,7 +253,7 @@
         public function actualizarTramiteManual(){
             $row = null;
             if(isset($_POST['Actualizar_Tramite'])){
-                $FolioRegistro = $_POST['FolioAct'];
+                $FolioRegistro = trim($_POST['FolioAct']);
                 $idDepto = isset($_GET['idDepto']) ? (int)$_GET['idDepto'] : 2;
 
                 //Llamar al metodo del modelo para hacer la consulta

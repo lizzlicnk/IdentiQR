@@ -1,7 +1,7 @@
-<?php 
+<!-- 
     //Incluir el controlador de la Dirección/Departamento correspondiente
     //Incluir el controlador de la Dirección/Departamento correspondiente
-
+/*
     // Ruta segura a ControladorDirecciones.php (desde app/Views/dirDirAca -> app/Controllers)
     $controladorPath = __DIR__ . '/../../Controllers/ControladorDirecciones.php';
     // Ruta segura a la conexión (project_root/config/Connection_BD.php)
@@ -73,9 +73,8 @@
             //include "app/views/form_index.php";
             break;
     }
-
-?>
-
+*/
+-->
 
 <!DOCTYPE html>
 <html lang="es">

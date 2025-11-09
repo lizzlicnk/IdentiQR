@@ -99,7 +99,7 @@ nav a:hover {
 }
 
 /* Contenedor de gestión */
-#generarJustificante, #revisarJustificante, #eliminarJustificante {
+#generarJustificante, #revisarJustificante, #modificarJustificante, #eliminarJustificante {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -365,8 +365,6 @@ footer {
     text-align: center;
 }
 
-
-
 #revisarJustificante .opcionConsulta {
     display: flex;
     align-items: center;
@@ -409,7 +407,7 @@ footer {
         gap: 10px;
     }
 
-    #generarJustificante, #revisarJustificante, #eliminarJustificante {
+    #generarJustificante, #revisarJustificante, #modificarJustificante, #eliminarJustificante {
         padding: 10px;
     }
 

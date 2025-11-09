@@ -259,48 +259,6 @@
             }
 
         }
-        //Realizamos las validaciones
-        /*Realizamos la instancia del metodo de inserción */
-        $db = new Connection_BD();
-        $conn = $db->getConnection(); 
-
-        if (!isset($db) || !$db) {
-            die("Error: La conexión a la base de datos no está definida.");
-        }
-
-        $controladorUsuario = new UserController($conn);
-        if(isset($_GET['action'])){
-            $action = $_GET['action'];
-            switch($action){
-                case 'loginUsuario':
-                    $controladorUsuario -> loginUsuario();
-                    break;
-                case 'logoutUsuario':
-                    $controladorUsuario -> logoutUsuario();
-                    break;
-                case 'registroUsuario':
-                    $controladorUsuario -> registrarUsuario();
-                    break;
-                case 'consultarUsuario':
-                    $controladorUsuario -> consultarUsuario();
-                    break;
-                case 'updateUsuarioID':
-                    $controladorUsuario -> actualizarUsuario();
-                    break;
-                case 'buscarUsuario':
-                    $controladorUsuario -> buscarUsuario();
-                    break;
-                case 'eliminarUsuario':
-                    $controladorUsuario -> eliminarUsuario();
-                    break;
-                default:
-                    include_once __DIR__ . "/IdentiQR/index.html";
-                    break;
-            }
-        } else {
-            $controladorUsuario -> loginUsuario(); 
-        }
-        
 
 
     ?>

@@ -274,7 +274,8 @@ function confirmarEliminacion(folioSeguimiento) {
             // Crear un formulario para enviar el FolioSeguimiento por POST
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = 'GestionesAdmin_Direccion.php?action=deleteFS';
+            form.action = '/IdentiQR/redireccionAcciones.php?action=deleteFS';
+            //form.action = 'GestionesAdmin_Direccion.php?action=deleteFS';
             
             // Agregar campo FolioSeguimiento
             const inputFolio = document.createElement('input');

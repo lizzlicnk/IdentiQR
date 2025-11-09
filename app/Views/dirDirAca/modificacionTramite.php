@@ -45,7 +45,7 @@
         
         <div id = "generarJustificante">
             <h2>Gestión de justificantes</h2>
-            <form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=update" method="POST">
+            <form action="/IdentiQR/redireccionAcciones.php?action=update" method="POST">
                 <fieldset>
                     <legend>Actualización de Tramite - <?php echo $row['FolioSeguimiento']; ?> </legend>
                     <!--!: Aquí se encontrara toda la información relevante para obtener un QR y generar el justificante-->

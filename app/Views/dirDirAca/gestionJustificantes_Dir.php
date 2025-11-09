@@ -45,7 +45,8 @@
         
         <div id = "generarJustificante">
             <h2>Gestión de justificantes</h2>
-            <form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=insert" method="POST">
+            <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=insert" method="POST"> --> 
+            <form action="/IdentiQR/redireccionAcciones.php?action=insert" method="POST">
                 <fieldset>
                     <legend>Generar justificante</legend>
                     <!--!: Aquí se encontrara toda la información relevante para obtener un QR y generar el justificante-->
@@ -77,11 +78,12 @@
                     <input type="submit" value="Registrar servicio (Justificante o Recursamiento)" name = "registrarTramite_dirDirACA" onclick="alert('Datos enviados con exito')">
                 </fieldset>
             </form>
+        </div>
 
-            <div id = "revisarJustificante">
+        <div id = "revisarJustificante">
                 <!--Aquí se incluira la tabla del justificante hecho.-->
-                <form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult" method = "POST">
-                    
+                <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult" method = "POST"> -->
+                <form action="/IdentiQR/redireccionAcciones.php?action=consult" method="POST">    
                     <!-- Selección de tipo de búsqueda -->
                     <fieldset>
                         <legend>Consultar por:</legend>
@@ -156,7 +158,7 @@
                         </thead>
                         <tbody>
                             <?php
-                                if(isset($direccion) && $direccion !== null){
+                                if(isset($direccion) && $direccion !== null or ($direccion === 0)){
                                     while($row = $direccion->fetch_assoc()){
                             ?>
                                     <tr>
@@ -168,7 +170,7 @@
                                         <td><?php echo $row['descripcion']; ?></td>
                                         <td><?php echo $row['estatusT']; ?></td>
                                         <td>
-                                            <a href="GestionesAdmin_Direccion.php?action=update&Folio=<?php echo $row['FolioSeguimiento'] ?? ''; ?>">
+                                            <a href="/IdentiQR/redireccionAcciones.php?action=update&Folio=<?php echo $row['FolioSeguimiento'] ?? ''; ?>">
                                                 <button type="button">Editar</button>
                                             </a>
                                             <button type="button" onclick="confirmarEliminacion('<?php echo $row['FolioSeguimiento'] ?? ''; ?>')">Eliminar</button>
@@ -187,29 +189,25 @@
                         </tbody>
                     </table> 
             </div>
-
-            <form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=updateManual" method = "POST">
+        </div>
+        
+        <div id = "modificarJustificante">
+            <!-- <form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=updateManual" method = "POST"> -->
+            <form action="/IdentiQR/redireccionAcciones.php?action=updateManual" method="POST">
                 <fieldset>
                     <table></table>
                     <legend>Actualizar justificante</legend>
                     <!--!: Aquí se encontrara toda la información relevante para obtener un QR y generar el justificante-->
                     <label for="folioConsulta">Ingrese Folio:</label>
                     <input type="text" name="FolioAct" id="FolioAct" placeholder="Ej. FOL12345 o [0001,0002]"> <!--*: Aquí debería abrir la camara para escanear-->
-                    <input type="hidden" name="Folio" id="FolioHidden">
                     <input type="submit" value="Actualizar registro" name = "Actualizar_Tramite" onclick="alert('Redirección a página de actualización')">
-                    <script>
-                        // Cada vez que se escriba algo en el input visible, se copia al hidden
-                        const folioInput = document.getElementById('Folio');
-                        const hiddenFolio = document.getElementById('FolioHidden');
-
-                        folioInput.addEventListener('input', function() {
-                            hiddenFolio.value = this.value.trim();
-                        });
-                    </script>
                 </fieldset>
             </form>
+        </div>
 
-            <form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=deleteFS" method="POST" onsubmit="return confirmarEliminacionFS(event)">
+        <div id = "eliminarJustificante">
+            <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=deleteFS" method="POST" onsubmit="return confirmarEliminacionFS(event)"> --> 
+                <form action="/IdentiQR/redireccionAcciones.php?action=deleteFS" method="POST" onsubmit="return confirmarEliminacionFS(event)">
                 <fieldset>
                     <legend>Eliminar justificante por Folio de Seguimiento</legend>
                     <label for="FolioSeguimiento">Folio de Seguimiento a eliminar: </label>
@@ -220,7 +218,6 @@
                 </fieldset>
             </form>
         </div>
-
         <br>
         <footer class="FooterIndex1" id = "FooterIndex1">
             <div class="FooterIndex1">
