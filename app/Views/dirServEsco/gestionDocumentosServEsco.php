@@ -1,6 +1,7 @@
 <?php
     include __DIR__ . '/../../../public/PHP/extraccionDatos_Tablas.php'; // Permite hacer uso de los metodos
     $idDepto = 3; //Esta variable permitira ser modificada para cada departamentp
+    $contro = "dirServEsco";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -8,11 +9,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/jpg" href="/IdentiQR/public/Media/img/Favicon.ico"/> <!--FAVICON-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="/IdentiQR/public/CSS/gestionesTramitesDireccionesGenerales.css">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+        
+
+        <script type="text/javascript" src="https://rawcdn.githack.com/schmich/instascan-builds/master/instascan.min.js"></script>
+        <!--<script type="text/javascript" src="/IdentiQR/public/JavaScript/instascan.min.js"></script>-->
         <script src="/IdentiQR/public/JavaScript/gestionesDirecciones.js"></script>
         <title>DireccionACADEMICA_IdentiQR</title>
     </head>
@@ -29,7 +33,7 @@
                             <li><a href="/IdentiQR/index.html" class="select">INICIO</a></li>
                             <li><a href="#">TEMAS</a></li>
                             <li><a href="#">CONTACTOS</a></li>
-                            <li><a href="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php">REGRESAR</a></li> <!--MODIFICAS-->
+                            <li><a href="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php">REGRESAR</a></li>
                             <button onclick="history.back();">VOLVER</button> <!--AQUÍ SE REGRESARA-->
                         </ul>
                     </nav>
@@ -50,7 +54,7 @@
         <div id = "generarTramite">
             <h2>Gestión de Servicios escolares</h2>
             <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=insert" method="POST"> --> 
-            <form id="formGenerarTramite" action="/IdentiQR/redireccionAcciones.php?controller=dirServMed&action=insert" method="POST">
+            <form id="formGenerarTramite" action="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro; ?>&action=insert" method="POST">
                 <fieldset>
                     <legend>Generar Tramites o servicios - Servicios Escolares</legend>
                     <!--*AApartir de aca se solicitará la información de la matricula del estudiante escaneado-->
@@ -69,8 +73,8 @@
                             <option value="0010">Reposicion Credencial</option>
                             <option value="0015">Constancias e historial</option>
                         </select>
-                    <br><br>
-                    <label for="tipoPago">Metodo de pago: </label>
+                    <br>
+                    <label for="metodoPago">Metodo de pago: </label>
                         <select name="metodoPago" id="metodoPago">
                             <option name="metodoPago" id="metodoPago" disabled="disabled" selected>Seleccione una opción</option>
                             <option value="TDD">Debito</option>
@@ -78,15 +82,43 @@
                             <option value="Transferencia">Transferencia</option>
                             <option value="Deposito">Deposito</option>
                         </select>
-                    <hr>
-                    <label for="descripcion">Descripción adicional: </label><br>
-                    <textarea id="descripcion" name="descripcion" rows="3" cols="40"
-                        placeholder="[Ejemplo. Tramite requerido para el IMSS, ISSTE, BECA, Perdí mi credencial, etc.]..."></textarea>
                     <br>
-                    <hr>
+                    <label for="montoPagado">Monto Pagado ($):</label>
+                    <input type="number" step="0.01" min="0" name="montoPagado" id="montoPagado" placeholder="Ej. 250.00" required>
+                    <br><br>
+
+                    <label for="fechaSolicitud">Fecha de Solicitud:</label>
+                        <input type="date" name="fechaSolicitud" id="fechaSolicitud" required>
+                    <br>
+
+                    <label for="motivoConstancia">Motivo/Destino del Documento (si aplica):</label>
+                    <select name="motivoConstancia" id="motivoConstancia">
+                        <option value="" disabled selected>Seleccione el destino del documento...</option>
+                        <option value="NO APLICA">NO APLICA</option>
+                        <option value="IMSS">IMSS (Convenio Universitario)</option>
+                        <option value="BECAS">Solicitud o Renovación de Becas Internas/Externas</option>
+                        <option value="TITULACION">Proceso de Titulación</option>
+                        <option value="BAJA_TEMPORAL">Baja Temporal</option>
+                        <option value="BAJA_DEFINITIVA">Baja Definitiva</option>
+                        <option value="CERTIFICACION_COMPETENCIAS">Certificación de Competencias</option>
+                        <option value="APOYO_ADMINISTRATIVO">Apoyo Administrativo (Dudas, aclaraciones)</option>
+                        <option value="OTROS">Otro (Especificar en descripción adicional)</option>
+                        <!--
+                        <option value="CONSTANCIA DE ESTUDIOS SIMPLE">CONSTANCIA SIMPLE</option>
+                        <option value="CONSTANCIA DE ESTUDIOS CON PROMEDIO">CONSTANCIA CON PROMEDIO</option>
+                        <option value="CONSTANCIA DE ESTUDIOS ESPECIAL">CONSTANCIA ESPECIAL</option>
+                        <option value="HISTORIAL ACADEMICO"></option>
+                        -->
+                    </select>
+                    <br>
+                    <label for="descripcion">Descripción adicional (Si no aplica - N/A): </label>
+                    <textarea id="descripcion" name="descripcion" rows="2" cols="40"
+                        placeholder="[Ejemplo. NOTAS O URGENCIA]..."></textarea>
+                    <br>
                     
-                    <input type="hidden" name="idDepto" value="<?php echo $idDepto; ?>">
-                    <input type="submit" value="Registrar asistencias alumno" name = "registrarTramite_dirMedica" onclick="alert('Datos enviados con exito')">
+                    <hr>
+                    <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
+                    <input type="submit" value="Registrar tramite - Serv. esco" name = "registrarTramite_dirServEsco" onclick="alert('Datos enviados con exito')">
                 </fieldset>
             </form>
         </div>
@@ -94,7 +126,7 @@
         <div id = "revisarTramite">
                 <!--Aquí se incluira la tabla del justificante hecho.-->
                 <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult" method = "POST"> -->
-                <form action="/IdentiQR/redireccionAcciones.php?controller=dirServMed&action=consult" method="POST">    
+                <form action="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro; ?>&action=consult" method="POST">    
                     <!-- Selección de tipo de búsqueda -->
                     <fieldset>
                         <legend>Consultar por:</legend>
@@ -123,7 +155,7 @@
                     <!-- Campo: Mostrar Todos -->
                     <div id="campoTodosConsulta" style="display:none;">
                         <p>Se mostrarán todos los trámites del departamento.</p>
-                        <input type="hidden" name="idDepto" value ="<?php echo $idDepto; ?>"> <!--NOTA: Considerar que este tipo HIDDEN el valor siempre cambiara-->
+                        <input type="hidden" name="idDepto" value ="<?php echo $idDepto;?>"> <!--NOTA: Considerar que este tipo HIDDEN el valor siempre cambiara-->
                         <input type="submit" value="Mostrar Todos los Trámites" name="consultarTramite_Depto">
                     </div>
 
@@ -149,7 +181,7 @@
                     <div id="campoTramiteConsulta" style="display:none;">
                         <label for="idTramiteConsulta">Seleccione el trámite:</label>
                         <select name="idTramite" id="idTramiteConsulta">
-                            <option no value="" disabled>Seleccione una opción</option>
+                            <option no value="" disabled>Seleccione una opción...</option>
                             <option value="0003">Reinscripcion</option>
                             <option value="0004">Inscripcion</option>
                             <option value="0010">Reposicion Credencial</option>
@@ -168,7 +200,10 @@
                             <th>Matricula</th>
                             <th>Descripcion</th>
                             <th>Estatus</th>
-                            <th>Extracurricular</th>
+                            <th>METODO PAGO</th>
+                            <th>COSTO</th>
+                            <th>MOTIVO</th>
+                            <th>EXTRAS</th>
                             <th>ACCIONES</th>
                         </thead>
                         <tbody>
@@ -184,12 +219,15 @@
                                     <td><?php echo $row['Matricula']; ?></td>
                                     <td><?php echo $row['descripcion']; ?></td>
                                     <td><?php echo $row['estatusT']; ?></td>
-                                    <td><?php echo obtenerExtracurricular($row['descripcion']); ?></td>
+                                    <td><?php echo obtenerMetodoPago($row['descripcion']); ?></td>
+                                    <td><?php echo obtenerCostoPagado($row['descripcion']); ?></td>
+                                    <td><?php echo obtenerMotivo($row['descripcion']); ?></td>
+                                    <td><?php echo obtenerRequerimientosExtras($row['descripcion']); ?></td>
                                     <td>
-                                        <a href="/IdentiQR/redireccionAcciones.php?controller=dirServMed&action=updateServMed&Folio=<?php echo $row['FolioSeguimiento'] ?? ''; ?>&idDepto=<?php echo $idDepto; ?>">
+                                        <a href="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro;?>&action=updateServEsco&Folio=<?php echo $row['FolioSeguimiento'] ?? ''; ?>&idDepto=<?php echo $idDepto; ?>">
                                             <button type="button">Editar</button>
                                         </a>
-                                        <button type="button" onclick="confirmarEliminacion('<?php echo $row['FolioSeguimiento'] ?? ''; ?>')">Eliminar</button>
+                                        <button type="button" onclick="confirmarEliminacion('<?php echo $contro?>','<?php echo $row['FolioSeguimiento'] ?? ''; ?>','<?php echo $idDepto;?>')">Eliminar</button>
                                     </td>
                                 </tr>
                             <?php
@@ -197,7 +235,7 @@
                                 } else {
                             ?>
                                 <tr>
-                                    <td colspan="9">No hay trámites para mostrar. Presione "ConsultarTramites" para cargar los datos.</td>
+                                    <td colspan="11">No hay trámites para mostrar. Presione "ConsultarTramites" para cargar los datos.</td>
                                 </tr>
                             <?php
                                 }
@@ -209,14 +247,14 @@
         
         <div id = "modificarTramite">
             <!-- <form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=updateManual" method = "POST"> -->
-            <form action="/IdentiQR/redireccionAcciones.php?controller=dirServMed&action=updateManualServMed" method="POST">
+            <form action="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro;?>&action=updateManualServEsco" method="POST">
                 <fieldset>
                     <table></table>
-                    <legend>Actualizar Cita médica</legend>
+                    <legend>Actualizar Tramite de Servicio (Papeleo)</legend>
                     <!--!: Aquí se encontrara toda la información relevante para obtener un QR y generar el justificante-->
                     <label for="folioConsulta">Ingrese Folio:</label>
                     <input type="text" name="FolioAct" id="FolioAct" placeholder="Ej. FOL12345 o [0001,0002]"> <!--*: Aquí debería abrir la camara para escanear-->
-                    <input type="hidden" name="idDepto" value="<?php echo $idDepto; ?>">
+                    <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
                     <input type="submit" value="Actualizar registro" name = "Actualizar_Tramite" onclick="alert('Redirección a página de actualización')">
                 </fieldset>
             </form>
@@ -224,12 +262,12 @@
 
         <div id = "eliminarTramite">
             <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=deleteFS" method="POST" onsubmit="return confirmarEliminacionFS(event)"> --> 
-            <form action="/IdentiQR/redireccionAcciones.php?controller=dirServMed&action=deleteFS" method="POST" onsubmit="return confirmarEliminacionFS(event)">
+            <form action="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro;?>&action=deleteFS" method="POST" onsubmit="return confirmarEliminacionFS(event)">
                 <fieldset>
-                    <legend>Eliminar Cita medica por Folio de Seguimiento</legend>
+                    <legend>Eliminar Tramite de Servicios por Folio de Seguimiento</legend>
                     <label for="FolioSeguimiento">Folio de Seguimiento a eliminar: </label>
                     <input type="text" name="FolioSeguimiento" id="FolioSeguimiento" placeholder="Ej. MATRICULA-DATOS-4LETRAS etc. (Consultar en su vista)" required>
-                    <input type="hidden" name="idDepto" value="<?php echo $idDepto; ?>">
+                    <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
                     <br><br>
                     <input type="submit" value="Eliminar Trámite" name="BajaServicio_Tramite">
                 </fieldset>

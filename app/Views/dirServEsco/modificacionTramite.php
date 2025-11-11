@@ -44,7 +44,7 @@
         
         <div id = "generarJustificante">
             <h2>Gestión de Asistencia a Tutorías - DDA</h2>
-            <form action="/IdentiQR/redireccionAcciones.php?controller=dirDDA&action=updateDDA" method="POST">
+            <form action="/IdentiQR/redireccionAcciones.php?controller=dirServEsco&action=updateServEsco" method="POST">
                 <fieldset>
                     <legend>Actualización de Tramite - <?php echo $row['FolioSeguimiento']; ?> </legend>
                     <!--!: Aquí se encontrara toda la información relevante para obtener un QR y generar el justificante-->
@@ -68,9 +68,9 @@
                         <option value="Completado" <?php if($row['estatusT'] == 'Completado') echo 'selected'; ?>>Completado</option>
                         <option value="Cancelado" <?php if($row['estatusT'] == 'Cancelado') echo 'selected'; ?>>Cancelado</option>
                     </select>
-                    <input type="hidden" name="idDepto" id = "idDepto" value = "4"> <!--CONSIDERAR QUE CAMBIARA EL VALUE-->
+                    <input type="hidden" name="idDepto" id = "idDepto" value = "3"> <!--CONSIDERAR QUE CAMBIARA EL VALUE-->
 
-                    <input type="submit" value="Actualizar servicio (TUTORÍAS)" name = "actualizarTramite_Tramite" onclick="alert('Datos actualizados con exito')">
+                    <input type="submit" value="Actualizar servicio/tramite (Servicios escolares)" name = "actualizarTramite_Tramite" onclick="alert('Datos actualizados con exito')">
                 </fieldset>
             </form>
         <br>

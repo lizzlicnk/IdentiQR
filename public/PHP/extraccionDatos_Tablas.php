@@ -113,4 +113,99 @@
         return "N/A";
     }
 
+    /*FUNCIONES PARA LA DIRECCIÓN DE SERV ESCOLARES*/ 
+    //Función obtenerMetodoPago
+    function obtenerMetodoPago($descripcion) {
+        if (!$descripcion) return "No especificado";
+
+        // Buscar patrones como: "Método de pago: [TDD]" o "Metodo de pago - TDD" o "Método de pago: TDD."
+        if (preg_match('/Metodo(?: de)? pago\s*[:\-]?\s*\[?\s*([^\]\.\|\n\r]+?)\s*\]?(\.|$|\||\s)/iu', $descripcion, $m)) {
+            $metodo = trim($m[1]);
+            return $metodo !== '' ? $metodo : "No especificado";
+        }
+
+        // Búsqueda alternativa por palabras clave comunes
+        if (preg_match('/\b(TDD|TDC|Transferencia|Deposito|Depósito|Efectivo)\b/iu', $descripcion, $m2)) {
+            return trim($m2[1]);
+        }
+
+        return "No especificado";
+    }
+    //Función obtenerCostoPagado
+    function obtenerCostoPagado($descripcion) {
+        // Busca 'Monto pagado: [$', seguido de un número decimal (el monto)
+        // El patrón asegura que el número termine en un corchete ]
+        if (preg_match('/Monto pagado:\s*\[\$([\d\.\,]+)\]/u', $descripcion, $coincidencia)) {
+            // Formateamos el resultado como moneda
+            $monto = str_replace(',', '', $coincidencia[1]); // Quitar comas si existen
+            return "$" . number_format((float)$monto, 2); 
+        }
+        return "N/A";
+    }
+
+    //Función obtenerMotivo
+    /*function obtenerMotivo($descripcion) {
+        // Busca 'Motivo adicional:' seguido de un espacio y luego el contenido de los corchetes [ ]
+        if (preg_match('/Motivo adicional:\s*\[([^\]]+)\]/u', $descripcion, $coincidencia)) {
+            return trim($coincidencia[1]);
+        }
+        return "No especificado";
+    }*/
+    function obtenerMotivo($descripcion) {
+        if (!$descripcion) return "No especificado";
+
+        // Buscar "Motivo adicional: [ ... ]"
+        if (preg_match('/Motivo(?: adicional)?\s*[:\-]?\s*\[([^\]]+)\]/iu', $descripcion, $m)) {
+            $val = trim($m[1]);
+            if ($val === '' || strcasecmp($val, 'NO APLICA') === 0 || strcasecmp($val, 'N/A') === 0) {
+                return 'N/A';
+            }
+            return $val;
+        }
+
+        // Buscar "Motivo: texto" hasta punto, barra o pipe
+        if (preg_match('/Motivo(?: adicional)?\s*[:\-]?\s*([^|\.\n\r]+)/iu', $descripcion, $m2)) {
+            $val = trim($m2[1]);
+            if ($val === '' || strcasecmp($val, 'NO APLICA') === 0 || strcasecmp($val, 'N/A') === 0) {
+                return 'N/A';
+            }
+            return rtrim($val, ". ");
+        }
+
+        // Si no aparece, buscar campos "Motivo" en otras partes
+        if (preg_match('/\b(motivo|raz[oó]n)\b\s*[:\-]?\s*([^\|\.\n\r]+)/iu', $descripcion, $m3)) {
+            $val = trim($m3[2]);
+            return $val !== '' ? $val : 'N/A';
+        }
+
+        return "No especificado";
+    }
+    //Función obtenerRequerimientosExtra
+    function obtenerRequerimientosExtras($descripcion) {
+        if (!$descripcion) return "N/A";
+
+        // 1) Buscar entre <...>
+        if (preg_match('/Requerimientos\s*extras\s*[:\-]?\s*<\s*([^>]+?)\s*>/iu', $descripcion, $m)) {
+            $val = trim($m[1]);
+            return $val === '' ? 'N/A' : $val;
+        }
+
+        // 2) Buscar entre [...]
+        if (preg_match('/Requerimientos\s*extras\s*[:\-]?\s*\[\s*([^\]]+?)\s*\]/iu', $descripcion, $m)) {
+            $val = trim($m[1]);
+            return $val === '' ? 'N/A' : $val;
+        }
+
+        // 3) Buscar texto tras la etiqueta hasta pipe, punto final o fin de línea
+        if (preg_match('/Requerimientos\s*extras\s*[:\-]?\s*([^|\.\n\r]+)/iu', $descripcion, $m)) {
+            $val = trim($m[1]);
+            // Si viene vacío o es "NO APLICA" o "N/A" devolvemos N/A
+            if ($val === '' || strcasecmp($val, 'NO APLICA') === 0 || strcasecmp($val, 'N/A') === 0) {
+                return 'N/A';
+            }
+            return rtrim($val, " .");
+        }
+
+        return "N/A";
+    }
 ?>

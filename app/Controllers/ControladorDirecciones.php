@@ -204,7 +204,7 @@
                     $ContactoEmergencia_AUX = $resultDatos['contacto_emergencia'];
                     $FechaIngresoInfoMed_AUX = $resultDatos['fechaIngreso_InfoMed'];
                     $Cuatri_AUX          = $resultDatos['Cuatri'];          // función calcCuatrimestre()
-                    $Periodo_AUX = $resultDatos['Periodo'];
+                    $Periodo_AUX         = $resultDatos['Periodo'];
                     //Concatenación de datos
                     $nombreCompleto = trim("$Nombre_AUX $ApePat_AUX $ApeMat_AUX");
                     $requisitos = trim($Alergias_AUX. "- Sangre: $TipoSangre_AUX");
@@ -328,10 +328,13 @@
             //Valir que el boton fue enviado y tiene datos - dirServEsco
             if(isset($_POST['registrarTramite_dirServEsco'])){
                 $matricula = $_POST['matriculaEscaneadoBD']; // Aquí se escaneara
-
                 $idTramite = (int)$_POST['idTramite'];
-                
-                $seleccionExtra = $_POST['seleccionExtra'];
+                $metodoPago = $_POST['metodoPago'];
+                $descripcionAdicional = trim($_POST['descripcion']) !== '' ? $_POST['descripcion'] : "N/A";
+                $montoPagado = (double)$_POST['montoPagado'];
+                $fechaSolicitud = $_POST['fechaSolicitud'];
+                $motivoConstancia = $_POST['motivoConstancia'];
+
                 /*AQUÍ SE RECUPERARAN LOS DATOS DEL ALUMNO. */
                 $resultDatos = $this->alumnoModel->recuperarDatosAlumnoPorMatricula($matricula);
 
@@ -357,6 +360,7 @@
                     $ContactoEmergencia_AUX = $resultDatos['contacto_emergencia'];
                     $FechaIngresoInfoMed_AUX = $resultDatos['fechaIngreso_InfoMed'];
                     $Cuatri_AUX          = $resultDatos['Cuatri'];          // función calcCuatrimestre()
+                    $Periodo_AUX         = $resultDatos['Periodo'];
 
                     //Concatenación de datos
                     $nombreCompleto = trim("$Nombre_AUX $ApePat_AUX $ApeMat_AUX");
@@ -365,27 +369,32 @@
                     //Validamos que tipo de servicio es
                     switch($idTramite){
                         case 5: 
-                            $tram = "Extracurricular";
-                            $fraseDia = "Solicitó unirse al extracurricular";
+                            $tram = "Tramite de Servicios escolares";
+                            $fraseDia = "Solicitó el tramite";
                             break;
                         default:
-                            $tram = "Extracurricular";
-                            $fraseDia = "Solicitó unirse al extracurricular";
+                            $tram = "Tramite de Servicios escolares";
+                            $fraseDia = "Solicitó el tramite";
                             break;
                     }
-
                     // Generamos la descripción
-                    $descripcionTotal = sprintf(
-                        "El Alumno [%s] con matrícula [%s] del cuatrimestre [%s] de la carrera [%s] <%s> de [%s-%s]. Datos Médicos [$%s]",
+                    trim($descripcionTotal = sprintf(
+                        "El Alumno [%s] con matrícula [%s] y correo [%s], inscrito en el %s Cuatri de [%s], <%s> |PERIODO: <%s> [%s - %d] el día <%s> |Motivo adicional: [%s] | Monto pagado: [$%.2f] | Método de pago: [%s]. Requerimientos extras: <%s>" ,
                         $nombreCompleto,
                         $matricula,
+                        $Correo_AUX,
                         $Cuatri_AUX,
                         $DescripcionCarrera_AUX,
+                        $Periodo_AUX,
                         $fraseDia,
                         $tram,
-                        $seleccionExtra,
-                        $requisitos
-                    );
+                        $idDepto,
+                        $fechaSolicitud,
+                        $motivoConstancia,
+                        $montoPagado,
+                        $metodoPago,
+                        $descripcionAdicional
+                    ));
                     $insert = $this->directionModel -> registrarTramite($matricula, $idTramite, $descripcionTotal);
                     
                     if($insert){
@@ -479,7 +488,7 @@
                         break;
                     case 3:
                         //Servicio escolares
-                        include_once(__DIR__ . '/../Views/dirServEsco/gestionSocumentosServEsco.php'); 
+                        include_once(__DIR__ . '/../Views/dirServEsco/gestionDocumentosServEsco.php'); 
                         exit();
                         break;
                     case 4:
@@ -529,7 +538,7 @@
                         break;
                     case 3:
                         //Servicio escolares
-                        include_once(__DIR__ . '/../Views/dirServEsco/gestionSocumentosServEsco.php');
+                        include_once(__DIR__ . '/../Views/dirServEsco/gestionDocumentosServEsco.php');
                         exit();
                         break;
                     case 4:
@@ -580,7 +589,7 @@
                     break;
                 case 3:
                     //Servicio escolares
-                    include_once(__DIR__ . '/../Views/dirServEsco/gestionSocumentosServEsco.php');
+                    include_once(__DIR__ . '/../Views/dirServEsco/gestionDocumentosServEsco.php');
                     exit();
                     break;
                 case 4:
@@ -632,7 +641,7 @@
                     break;
                 case 3:
                     //Servicio escolares
-                    include_once(__DIR__ . '/../Views/dirServEsco/gestionSocumentosServEsco.php');
+                    include_once(__DIR__ . '/../Views/dirServEsco/gestionDocumentosServEsco.php');
                     exit();
                     break;
                 case 4:
@@ -683,7 +692,7 @@
                     break;
                 case 3:
                     //Servicio escolares
-                    include_once(__DIR__ . '/../Views/dirServEsco/gestionSocumentosServEsco.php');
+                    include_once(__DIR__ . '/../Views/dirServEsco/gestionDocumentosServEsco.php');
                     exit();
                     break;
                 case 4:
@@ -1002,7 +1011,7 @@
                     case 3:
                         //Servicio escolares
                         $redireccion = "/IdentiQR/app/Views/dirServEsco/GestionesAdmin_ServEsco.php?action=consult";
-                        include_once(__DIR__ . '/../Views/dirServEsco/gestionSocumentosServEsco.php'); 
+                        include_once(__DIR__ . '/../Views/dirServEsco/gestionDocumentosServEsco.php'); 
                         //exit();
                         break;
                     case 4:
@@ -1084,7 +1093,7 @@
                 case 3:
                     //Servicio escolares
                     $redireccion = "/IdentiQR/app/Views/dirServEsco/GestionesAdmin_ServEsco.php?action=consult";
-                    include_once(__DIR__ . '/../Views/dirServEsco/gestionSocumentosServEsco.php'); 
+                    include_once(__DIR__ . '/../Views/dirServEsco/gestionDocumentosServEsco.php'); 
                     //exit();
                     break;
                 case 4:
