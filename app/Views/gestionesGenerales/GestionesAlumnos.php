@@ -164,39 +164,39 @@
                         </select>
                     </div>
                     <br>
-                </fieldset>
-                <!--!: Esta parte del formulario permitira registrar el formulario de la ficha medica-->
-                <fieldset id = "fichaMedica">
-                    <legend>Ficha médica</legend>
-                    <div>
-                    <label for="tipoSangre">Tipo de sangre</label>
-                        <select type = "select" id = "tipoSangre" name  = "tipoSangre" required>
-                            <option value = "A+">A+</option>
-                            <option value = "O+">O+</option>
-                            <option value = "B+">B+</option>
-                            <option value = "AB+">AB+</option>
-                            <option value = "A-">A-</option>
-                            <option value = "O-">O-</option>
-                            <option value = "B-">B-</option>
-                            <option value = "AB-">AB-</option>
-                        </select>
+                    </fieldset>
+                    <!--!: Esta parte del formulario permitira registrar el formulario de la ficha medica-->
+                    <fieldset id = "fichaMedica">
+                        <legend>Ficha médica</legend>
+                        <div>
+                        <label for="tipoSangre">Tipo de sangre</label>
+                            <select type = "select" id = "tipoSangre" name  = "tipoSangre" required>
+                                <option value = "A+">A+</option>
+                                <option value = "O+">O+</option>
+                                <option value = "B+">B+</option>
+                                <option value = "AB+">AB+</option>
+                                <option value = "A-">A-</option>
+                                <option value = "O-">O-</option>
+                                <option value = "B-">B-</option>
+                                <option value = "AB-">AB-</option>
+                            </select>
+                        </div>
+                        <div>
+                        <label for="alergias">Alergias</label>
+                            <input type="text" id="alergias" name="alergias" placeholder="Escribe 'Sin_Alergias' si aplica">
+                        </div>
+                        <div>
+                        <label for="contactoEmergencia">Contacto de emergencia (teléfono)</label>
+                            <input type="tel" id="contactoEmergencia" name="contactoEmergencia" placeholder="777-###-####" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                        </div>
+                    </fieldset>
+                    <!--Este será el boton para enviar los datos-->
+                    <div class="form-group row">
+                        <div class="col-12 text-center">
+                            <input type="submit" name="Enviar_Alumno" value = "Enviar_Alumno"  class="btn btn-primary" onclick = "registroAlumno()">
+                        </div>
                     </div>
-                    <div>
-                    <label for="alergias">Alergias</label>
-                        <input type="text" id="alergias" name="alergias" placeholder="Escribe 'Sin_Alergias' si aplica">
-                    </div>
-                    <div>
-                    <label for="contactoEmergencia">Contacto de emergencia (teléfono)</label>
-                        <input type="tel" id="contactoEmergencia" name="contactoEmergencia" placeholder="777-###-####" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
-                    </div>
-                </fieldset>
-                <!--Este será el boton para enviar los datos-->
-                <div class="form-group row">
-                    <div class="col-12 text-center">
-                        <input type="submit" name="Enviar_Alumno" value = "Enviar_Alumno"  class="btn btn-primary" onclick = "registroAlumno()">
-                    </div>
-                </div>
-            </form>
+                </form>
         </section>
 
         <hr>

@@ -16,7 +16,7 @@
     $rol = $rolDetectado;
     $destinos = [
         "Administrador" => "GestionesAdministradorG.php",
-        "Administrativo_Vinculacion" => "dirVinculacion/GestionesAdminVinculacion.php",
+        "Administrativo_Vinculacion" => "dirVinculacion/GestionesAdmin_Vinculacion.php",
         "Administrativo_ServicioEsco" => "dirServEsco/GestionesAdmin_ServEsco.php",
         "Administrativo_DesaAca" => "dirDDA/GestionesAdmin_DesaAca.php",
         "Administrativo_DAE" => "dirDAE/GestionesAdmin_DAE.php",

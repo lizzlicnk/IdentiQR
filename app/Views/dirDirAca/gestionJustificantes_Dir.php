@@ -83,7 +83,7 @@
         <div id = "revisarJustificante">
                 <!--Aquí se incluira la tabla del justificante hecho.-->
                 <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult" method = "POST"> -->
-                <form action="/IdentiQR/redireccionAcciones.php?action=consult" method="POST">    
+                <form action="/IdentiQR/redireccionAcciones.php?controller=dirDirAca&action=consult" method="POST">    
                     <!-- Selección de tipo de búsqueda -->
                     <fieldset>
                         <legend>Consultar por:</legend>
@@ -193,7 +193,7 @@
         
         <div id = "modificarJustificante">
             <!-- <form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=updateManual" method = "POST"> -->
-            <form action="/IdentiQR/redireccionAcciones.php?action=updateManual" method="POST">
+            <form action="/IdentiQR/redireccionAcciones.php?controller=dirDirAca&action=updateManual" method="POST">
                 <fieldset>
                     <table></table>
                     <legend>Actualizar justificante</legend>

@@ -74,7 +74,7 @@
 
                     // Generamos la descripción
                     $descripcionTotal = sprintf(
-                        "El Alumno [%s] con matrícula [%s] del cuatrimestre [%s] de la carrera [%s] solicitó un <%s> %s [%s]. Requisitos o notas [$%s]",
+                        "El Alumno [%s] con matrícula [%s] del cuatrimestre [%s] de la carrera [%s] solicitó un <%s> %s [%s]. Requisitos o notas [%s]",
                         $nombreCompleto,
                         $matricula,
                         $Cuatri_AUX,
