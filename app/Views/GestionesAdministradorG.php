@@ -41,10 +41,10 @@
             <!-- !Aquí se encontrara los diferentes usos que podrá tener el admin, este podrá cambiar: nota-->    
             <div id = "ExportarDatos" class = "SeguridadDatos">
                 <h2>Exportación y recuperación de Datos</h2>
-                <a href="/IdentiQR/app/Models/backup.php">
+                <a href="/IdentiQR/redireccionAcciones.php?controller=BackRest_DBs&action=backup"> <!--NOTA. ACABAR-->
                     <button onclick=""><i class="fa-solid fa-download"></i>Respaldar Base de datos</button>
                 </a>
-                <form action="/IdentiQR/app/Models/restore.php" method="post" enctype="multipart/form-data">
+                <form action="/IdentiQR/redireccionAcciones.php?controller=BackRest_DBs&action=restore" method="post" enctype="multipart/form-data">
                     <label for="backupFile"><i class="fa-solid fa-file"></i>Suba un archivo .sql (máx 50MB):</label><br>
                         <input type="file" id="backupFile" name="backupFile" accept=".sql" required><br><br>
 

@@ -4,7 +4,7 @@
     $host="localhost";
     $user="root";
     $pw="";
-    $bd="IdentiQR";
+    $bd="identiqr";
 
     //GENERAMOS LA CONEXION CON EL SERVIDOR
     $conn = new mysqli($host,$user,$pw,$bd);

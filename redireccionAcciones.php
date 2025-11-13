@@ -3,6 +3,7 @@
     include_once "config/Connection_BD.php";
     //include_once "app/Controllers/ControladorAlumnos.php";
     include_once "app/Controllers/ControladorDirecciones.php";
+    include_once "app/Controllers/ControladorBD.php";
     //include_once "app/Controllers/ControladorUsuario.php";
     
     // Crear la conexión a la base de datos
@@ -36,6 +37,9 @@
             break;
         case 'dirVinc':
             $controllerInstance = new DirectionsController($conn);
+            break;
+        case 'BackRest_DBs': //Back: Backup y Rest: Restore
+            $controllerInstance = new ControllerBD($conn);
             break;
         /*case 'alumno':
             $controllerInstance = new AlumnoController($conn);
@@ -110,6 +114,13 @@
             $controllerInstance -> bajaTramiteFS();
             break;
         case 'inicio':
+            break;
+        /*AQUÍ ESTARAN LAS ACCIONES PARA EL BACKUP Y RESTORE DE LA BASE DE DATOS*/
+        case 'backup':
+            $controllerInstance -> backupDBs();
+            break;
+        case 'restore':
+            $controllerInstance -> restoreDBs();
             break;
         default:
             //echo "Error al encontrar el controlador";
