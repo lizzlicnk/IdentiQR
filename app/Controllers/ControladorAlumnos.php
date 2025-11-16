@@ -1,39 +1,8 @@
 <?php
-
-    //require_once '../../public/PHP/Alumno.php';
-    //require_once  '../../config/Connection_BD.php';
-
-    //NECESITO MOVER TODO
-    //require_once '../../public/PHP/codigosQR.php';
-    //require_once 'Controlador.php';
-
     require_once __DIR__ . '/../../config/Connection_BD.php';
     require_once __DIR__ . '/../../public/PHP/Alumno.php';
     require_once __DIR__ . '/../Models/ModeloAlumno.php';
     require_once __DIR__ . '/../../public/PHP/codigosQR.php';
-    /*
-    require_once __DIR__ . '/../Models/PHP/Alumno.php';
-    require_once __DIR__ . '/../../config/Connection_BD.php';
-    require_once __DIR__ . '/../Models/PHP/codigosQR.php';
-    require_once __DIR__ . '/Controlador.php';
-    */
-
-    /* Nota. 2025-10-23 "USO DE DEBUG PARA VERIFICAR LA EJECUCIÓN DEL CONTROLADOR"
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
-    // DEBUG: confirmar que este archivo se ejecuta
-    echo "<div style='background:#fffae6;padding:8px;border:2px solid #f0c040;margin:8px;'>ControladorAlumnos.php ejecutado</div>";
-
-    // DEBUG: mostrar POST (si existe) y método
-    echo "<div style='font-family:monospace;'>";
-    echo "Request method: " . $_SERVER['REQUEST_METHOD'] . "<br>";
-    if (!empty($_POST)) {
-        echo "<strong>POST recibidos:</strong><br><pre>" . htmlspecialchars(print_r($_POST, true)) . "</pre>";
-    } else {
-        echo "<strong>POST vacío</strong><br>";
-    }
-    echo "</div>";
-    */
 
     /*Creamos la clase del controlador de Alumnos */
     class AlumnoController{
@@ -45,7 +14,6 @@
         public function insertarAlumno(){
             //Este es el controlador (se debe encontrar en un METODO)
             /* Este IF verifica que el metodo que fue mandado es un POST */
-            //if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(isset($_POST['Enviar_Alumno'])) { //isset() Determina si una variable está definida y no es null
                 // Crear objeto Alumno que almacena los datos del formulario
                 $feIngreso = sprintf('%04d-09-01', $_POST['FeIngreso']); //https://www.php.net/manual/es/function.sprintf.php
@@ -55,8 +23,7 @@
                     $_POST['ApPat'],
                     $_POST['ApMat'],
                     $_POST['FeNac'],
-                    //$_POST['FeIngreso'],
-                    $feIngreso,
+                    $feIngreso, //$_POST['FeIngreso'],
                     $_POST['correo'] ?? null,
                     $_POST['direccion'],
                     $_POST['telefono'],
@@ -67,12 +34,8 @@
                     $_POST['genero'] ?? 'Otro'
                 );
                 // Se construye el objeto de tipo ALUMNO y se procesan los datos, posteriormente se mandan al modelo para la inserción
-                // echo "<div style='color:blue;'>Llamando a insertarAlumno()...</div>"; Nota.- 2025-10-23 Uso de debug para verificar ejecución
                 $insert =  $this->modelAlumno->insertarAlumno($Alumno);
-                // echo "<div style='color:blue;'>insertarAlumno() finalizó.</div>"; Nota.- 2025-10-23 Uso de debug para verificar ejecución
                 if ($insert) {
-                    //echo "<h2 style='color: green;'>Alumno registrado exitosamente.</h2>";
-
                     /*  Cuando se registra el alumno se va a instanciar la clase informaciónMedica
                     para poder crear el objeto y unirlo al alumno, una vez que fue registrado. */
                     $informacionMedica = new InformacionMedica(

@@ -6,6 +6,7 @@
         public function __construct($conn){
             $this->conn = $conn;
         }
+        /*Función que permitira el ingreso/insersión de los Alumnos dentro de la tabla */
         public function insertarAlumno(Alumno $unAlumno){
             //Lógica para las acciones dentro de la base de datos
             //Codigo para hacer el registro de alumnos
@@ -60,6 +61,7 @@
             */
         }
 
+        /*Función que permitira el ingreso/insersión de la Información médica de los Alumnos dentro de sus respectivas tablas */
         public function insertarInfoMedica(InformacionMedica $unaInforMed) {
             /*Realizamos la recuperación de los objetos para mandar la información*/
             $matriculaID = $unaInforMed->getMatricula();
@@ -79,6 +81,8 @@
             /*Retornamos el statement*/
             return $statement -> execute();
         }
+
+        /*Función que permitirá actualizar o asignar el HASH del QR al alumno correspondiente*/
         public function asignarHashQR(Alumno $alumno): bool {
             /*Hacemos la variable que contendra el query sql*/
             $matricula = $alumno->getMatricula();
@@ -93,6 +97,7 @@
             return $statement -> execute();
         }
 
+        /*Función que permitirá realizar la actualización/modificación de los Alumnos */
         public function actualizarAlumno(Alumno $unAlumno, string $matriculaOriginal): bool {
             // Código para actualizar los datos del alumno
             // Nota: Matricula y FeIngreso no se pueden modificar según las reglas de negocio
@@ -146,7 +151,7 @@
 
             return $stmt->execute();
         }
-
+        /*Función que permitirá realizar la actualización/modificación de la Información médica de los alumnos */
         public function actualizarInfoMedica(InformacionMedica $unaInforMed): bool {
             /* Código para actualizar la información médica */
             $matriculaID = $unaInforMed->getMatricula();
@@ -172,6 +177,7 @@
             return $statement->execute();
         }
 
+        /*Función que permitirá realizar la recuperación de un Alumno (Sus datos) por medio de la matricula. */
         public function obtenerAlumnoPorMatricula(string $matricula): ?array {
             $sql_statement = "SELECT Alumno.*, InformacionMedica.* FROM Alumno
                 LEFT JOIN InformacionMedica ON Alumno.Matricula = InformacionMedica.Matricula
@@ -191,7 +197,7 @@
             }
             return null;
         }
-
+        /*Función que permitirá realizar la recuperación de un Alumno (Sus datos) por medio de la matricula. */
         public function recuperarDatosAlumnoPorMatricula(string $matricula){
             $sql_statement = "
                 SELECT 
@@ -221,7 +227,7 @@
             //Si no encuentra registros, retorna NULL
             return null;
         }
-
+        /*Función que permitirá realizar la recuperación de todos los Alumnos (Sus datos) registrados en el sistema. */
         public function obtenerTodosAlumnos(){
             $sql_statement = "SELECT a.Matricula, a.Nombre, a.ApePat, a.ApeMat,a.FeIngreso,a.idCarrera, calcCuatrimestre(a.FeIngreso) as Cuatrimestre, a.FechaNac, a.Correo, im.TipoSangre FROM Alumno a LEFT JOIN InformacionMedica im ON a.Matricula = im.Matricula";
             
@@ -229,6 +235,7 @@
             return $result;
         }
 
+        /*Función que permitirá eliminar un alumno especifico dentro del sistema. Mediante su matricula*/
         public function eliminarAlumno($matricula){
             //Codigo para hacer la baja del Alumno
             $sql_statement = "call darBajaAlumno(?, @eliminado)";

@@ -41,7 +41,7 @@
             </nav>
         </header>
         <div class="container p-5 my-5 bg-dark text-white"> <!--TODO: Considerar quitar o dejar.-->
-            <!-- !Aquí se encontrara los diferentes usos que podrá tener el admin, este podrá cambiar: nota-->    
+            <!-- !Aquí se encontrará los diferentes usos que podrá tener el admin, este podrá cambiar: nota-->    
             <div id = "ExportarDatos" class = "SeguridadDatos">
                 <h2>Exportación y recuperación de Datos</h2>
                 <a href="/IdentiQR/redireccionAcciones.php?controller=BackRest_DBs&action=backup"> <!--NOTA. ACABAR-->
@@ -74,7 +74,7 @@
                     <a href = "/IdentiQR/app/Views/gestionesGeneralesUsuarios/GestionesUsuarios.php?action=eliminarU#seccionEliminarUsuario">Eliminar un Usuario</a>
                     <a href = "/IdentiQR/app/Views/gestionesGeneralesUsuarios/GestionesUsuarios.php?action=consultarUsuario#seccionConsultarUsuario">Buscar un Usuario</a>
 
-                    <!--BOTON QUE SE USARA UNICAMENTE PARA LA REDIRECCIÓN Y ENVIO DE LOS NUEVOS CODIGOS QR-->
+                    <!--BOTON QUE SE USARÁ ÚNICAMENTE PARA LA REDIRECCIÓN Y ENVIO DE LOS NUEVOS CODIGOS QR-->
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalConfirmacionQR">
                         Actualización MASIVA de QR
                     </button>
@@ -92,11 +92,11 @@
                 <hr>
                 <section>
                     <h2><i class="fa-solid fa-file"></i>Gestión de Trámites</h2>
-                    <!--*:  Aquí se van a incluir todos los tramites que se pueden realizar (Desto todos los departamentos)-->
+                    <!--*:  Aquí se van a incluir todos los trámites que se pueden realizar (De esto todos los departamentos)-->
                     <div id = "card-Dir">
                         <legend>Dirección Académica</legend>
-                        <a href="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php">Gestión Dirección Acádemica - Justificantes - Recursamiento - DirecciónAcademica</a>
-                        <!-- <a href="gestionRecursamiento_Dir.html">Recursamiento_DirecciónAcademica</a> -->
+                        <a href="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php">Gestión Dirección Acádemica - Justificantes - Recursamiento </a>
+                        <!-- <a href="gestionRecursamiento_Dir.html">Recursamiento_DirecciónAcadémica</a> -->
                     </div>
                     <hr>
                     <div id = "card-DirVinculacion">
@@ -106,7 +106,7 @@
                     <hr>
                     <div id = "card-DirDDA">
                         <legend>Dirección de Desarrollo Académico</legend>
-                        <a href="dirDDA/gestionAsistenciaTutorias.php">Gestión de DDA - Tutorias</a>
+                        <a href="dirDDA/gestionAsistenciaTutorias.php">Gestión de DDA - Tutorías</a>
                     </div>
                     <hr>
                     <div id = "card-DirDAE">
@@ -115,8 +115,8 @@
                     </div>
                     <hr>
                     <div id = "card-DirMedicina">
-                        <legend>Dirección de Atención Medica de Primer Contacto</legend>
-                        <a href="dirMedica/gestionDocMed.php">Gestion de citas con el medico - Médicina</a>
+                        <legend>Dirección de Atención Médica de Primer Contacto</legend>
+                        <a href="dirMedica/gestionDocMed.php">Gestión de citas con el médico - Médicina</a>
                     </div>
                     <hr>
                     <div id = "card-DirServEsco">
@@ -152,7 +152,7 @@
                     </div>
                     <div class="modal-body">
                         ¿Está seguro de que desea proceder con la modificación masiva de QR de los alumnos?
-                        <br>Considere que esta actualización podra demorar tiempo...
+                        <br>Considere que esta actualización podrá demorar tiempo...
                     </div>
                     <div class="modal-footer">
                         <a href="/IdentiQR/app/Controllers/ControladorAlumnos.php?action=actualizarQR_Alumno">
@@ -181,7 +181,7 @@
                 <p>
                     Toda información resguardada será de carácter relevante. 
                     No se podrá acceder a este sistema si no se cuenta con previo registro. 
-                    Por ningún motivo el estudiante podrá acceder al sistema.
+                    Por ningún motivo, el estudiante podrá acceder al sistema.
                 </p>
                 </div>
             </div>

@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="/IdentiQR/public/CSS/stylesLogin.css"> <!--CSS-->
     </head>
     <body>
-        <!-- !Aquí se encontrara el emcabezado, este podrá cambiar: nota-->
+        <!-- !Aquí se encontrara el encabezado, este podrá cambiar: nota-->
         <header id="HeaderIndex1" class="site-header">
             <div class="header-inner">
                 <div class="header-left">
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </header>
-        <!--*Apartir de acá se inicializara la parte de la página general, sera nuestro tema central e identificación de lo que contendra-->
+        <!--*A partir de acá se inicializara la parte de la página general, sera nuestro tema central e identificación de lo que contendrá-->
         
         <hr>
         <!-- TODO: Aquí empezaremos con la información que tiene que ver con los datos o mayoritariamente del index principal (Recursos, etc.)-->
