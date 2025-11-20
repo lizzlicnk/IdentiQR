@@ -58,9 +58,7 @@
                     <input type="hidden" name="FolioSeguimiento" id = "FolioSeguimiento" value = "<?php echo $row['FolioSeguimiento']?>">
                     
                     <label for="requisitos">Descripción/Requisitos: </label>
-                        <textarea rows="4" cols="30" id = "Descripcion" name = "Descripcion" value = "">
-                            <?php echo trim($row['descripcion']); ?>
-                        </textarea> <!--NOTA: Considerar que puede quedar disabled-->
+                        <textarea rows="4" cols="30" id = "Descripcion" name = "Descripcion" value = ""><?php echo trim($row['descripcion']); ?></textarea> <!--NOTA: Considerar que puede quedar disabled-->
                     <hr>
 
                     <select name="estatusT" id="estatusT" required>

@@ -47,8 +47,16 @@
             <hr>
 
             <section>
-                <h2>Consultas generales</h2>
-
+                <h2>Reportes PDF</h2>
+                <div class="reporte-container">
+                    <h3>Reporte De trámites realizados</h3>
+                    <form id="formRepInd" action="/IdentiQR/redireccionAcciones.php?controller=reportsGeneral&action=repGen_ServEsco" method="POST" novalidate>
+                        <input type="hidden" name="idDepto" value="3">
+                        <div style="margin-top:10px;">
+                            <input type="submit" class="btn-submit" value="Generar Reporte de Servicios escolares" name = "reporteIndividualizado_ServEsco">
+                        </div>
+                    </form>
+                </div>
             </section>
         </div>
 

@@ -13,8 +13,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <link rel="stylesheet" href="/IdentiQR/public/CSS/stylesGestionAdmin.css">
+        <script src="/IdentiQR/public/JavaScript/gestionesAdminGeneral.js"></script> <!--Aquí se encontraran los sweet-alert-->
         
         <title>Gestiones del Administrador_IdentiQR</title>
     </head>
@@ -44,10 +46,10 @@
             <!-- !Aquí se encontrará los diferentes usos que podrá tener el admin, este podrá cambiar: nota-->    
             <div id = "ExportarDatos" class = "SeguridadDatos">
                 <h2>Exportación y recuperación de Datos</h2>
-                <a href="/IdentiQR/redireccionAcciones.php?controller=BackRest_DBs&action=backup"> <!--NOTA. ACABAR-->
+                <a href="/IdentiQR/redireccionAcciones.php?controller=BackRest_DBs&action=backup" onclick="confirmarBackup(event, this.href)"> <!--NOTA. ACABAR-->
                     <button onclick=""><i class="fa-solid fa-download"></i>Respaldar Base de datos</button>
                 </a>
-                <form action="/IdentiQR/redireccionAcciones.php?controller=BackRest_DBs&action=restore" method="post" enctype="multipart/form-data">
+                <form action="/IdentiQR/redireccionAcciones.php?controller=BackRest_DBs&action=restore" method="post" enctype="multipart/form-data" onsubmit="confirmarRestore(event)">
                     <label for="backupFile"><i class="fa-solid fa-file"></i>Suba un archivo .sql (máx 50MB):</label><br>
                         <input type="file" id="backupFile" name="backupFile" accept=".sql" required><br><br>
                         <button type="submit"><i class="fa-solid fa-file"></i>Cargar y restaurar</button>
@@ -84,38 +86,37 @@
                     <div id = "card-Dir">
                         <legend>Dirección Académica</legend>
                         <a href="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php">Gestión Dirección Acádemica - Justificantes - Recursamiento </a>
-                        <!-- <a href="gestionRecursamiento_Dir.html">Recursamiento_DirecciónAcadémica</a> -->
                     </div>
                     <hr>
                     <div id = "card-DirVinculacion">
                         <legend>Dirección de Vinculación</legend>
-                        <a href="dirVinculacion/gestionDocumentosAlumnos.php">Gestión de Vinculación - Documentos de Alumnos</a>
+                        <a href="/IdentiQR/app/Views/dirVinculacion/GestionesAdmin_Vinculacion.php">Gestión de Vinculación - Documentos de Alumnos</a>
                     </div>
                     <hr>
                     <div id = "card-DirDDA">
                         <legend>Dirección de Desarrollo Académico</legend>
-                        <a href="dirDDA/gestionAsistenciaTutorias.php">Gestión de DDA - Tutorías</a>
+                        <a href="/IdentiQR/app/Views/dirDDA/GestionesAdmin_DesaAca.php">Gestión de DDA - Tutorías</a>
                     </div>
                     <hr>
                     <div id = "card-DirDAE">
                         <legend>Dirección de Asuntos Estudiantiles</legend>
-                        <a href="dirDAE/gestionDocumentosDAE.php">Gestión de DAE - Extracurriculares</a>
+                        <a href="/IdentiQR/app/Views/dirDAE/GestionesAdmin_DAE.php">Gestión de DAE - Extracurriculares</a>
                     </div>
                     <hr>
                     <div id = "card-DirMedicina">
                         <legend>Dirección de Atención Médica de Primer Contacto</legend>
-                        <a href="dirMedica/gestionDocMed.php">Gestión de citas con el médico - Médicina</a>
+                        <a href="/IdentiQR/app/Views/dirMedica/GestionesAdmin_Medico.php">Gestión de citas con el médico - Médicina</a>
                     </div>
                     <hr>
                     <div id = "card-DirServEsco">
                         <legend>Dirección de Servicios Escolares</legend>
-                        <a href="dirServEsco/gestionDocumentosServEsco.php">Gestión de documentos Estudiantiles - DAE</a>
+                        <a href="/IdentiQR/app/Views/dirServEsco/GestionesAdmin_ServEsco.php">Gestión de documentos Estudiantiles - DAE</a>
                     </div>
                     <hr>
                 </section>
                 <section id = "reportesGenerales">
                     <h2><i class="fa-solid fa-clipboard"></i>Reportes</h2>
-                    <form id="formReportes" action="/IdentiQR/redireccionAcciones.php?controller=reportsGeneral&action=restore" method="post">
+                    <form id="formReportes" action="/IdentiQR/redireccionAcciones.php?controller=reportsGeneral&action=restore" method="post" onsubmit="return generarReporteAlert()">
                         <label for="tipoReporte">Tipo de Reporte:</label>
                         <select id="tipoReporte" name="tipoReporte">
                             <option value="" disabled selected>Selecciona una opción...</option>
@@ -213,5 +214,8 @@
                 </div>
             </div>
         </footer>
+
+        <!-- VARIABLE OCULTA PARA COMUNICAR PHP -> JS -->
+        <input type="hidden" id="serverStatusBD" value="<?php echo $statusAlert; ?>">
     </body>
 </html>

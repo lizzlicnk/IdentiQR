@@ -1,5 +1,5 @@
 <?php
-    include __DIR__ . '/../../../public/PHP/extraccionDatos_Tablas.php'; // Permite hacer uso de los métodos
+    include_once __DIR__ . '/../../../public/PHP/extraccionDatos_Tablas.php'; // Permite hacer uso de los métodos
     $idDepto = 3; //Esta variable permitirá ser modificada para cada departamento
     $contro = "dirServEsco";
 ?>
@@ -71,7 +71,7 @@
                             <option value="0003">Reinscripción</option>
                             <option value="0004">Inscripción</option>
                             <option value="0010">Reposicion Credencial</option>
-                            <option value="0015">Constancias e historial</option>
+                            <option value="0014">Constancias e historial</option>
                         </select>
                     <br>
                     <label for="metodoPago">Método de pago: </label>
@@ -92,7 +92,7 @@
                     <br>
 
                     <label for="motivoConstancia">Motivo/Destino del Documento (si aplica):</label>
-                    <select name="motivoConstancia" id="motivoConstancia">
+                    <select name="motivoConstancia" id="motivoConstancia" required>
                         <option value="" disabled selected>Seleccione el destino del documento...</option>
                         <option value="NO APLICA">NO APLICA</option>
                         <option value="IMSS">IMSS (Convenio Universitario)</option>
@@ -126,7 +126,7 @@
         <div id = "revisarTramite">
                 <!--Aquí se incluirá la tabla del trámite hecho.-->
                 <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult" method = "POST"> -->
-                <form action="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro; ?>&action=consult" method="POST">    
+                <form action="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro; ?>&action=consult" method="POST" onsubmit="consultarConCarga(event)">    
                     <!-- Selección de tipo de búsqueda -->
                     <fieldset>
                         <legend>Consultar por:</legend>
@@ -185,7 +185,7 @@
                             <option value="0003">Reinscripcion</option>
                             <option value="0004">Inscripcion</option>
                             <option value="0010">Reposicion Credencial</option>
-                            <option value="0015">Constancias e historial</option>
+                            <option value="0014">Constancias e historial</option>
                         </select>
                         <input type="submit" value="Consultar por Trámite" name="consultarTramite_idTramite">
                     </div>
@@ -255,7 +255,7 @@
                     <label for="folioConsulta">Ingrese Folio:</label>
                     <input type="text" name="FolioAct" id="FolioAct" placeholder="Ej. FOL12345 o [0001,0002]"> <!--*: Aquí debería abrir la camara para escanear-->
                     <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
-                    <input type="submit" value="Actualizar registro" name = "Actualizar_Tramite" onclick="alert('Redirección a página de actualización')">
+                    <input type="submit" value="Actualizar registro" name = "Actualizar_Tramite">
                 </fieldset>
             </form>
         </div>
@@ -332,5 +332,6 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="serverStatusAlert" value="<?php echo isset($statusAlert) ? $statusAlert : ''; ?>">
     </body>
 </html>

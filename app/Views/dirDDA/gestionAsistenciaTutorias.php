@@ -1,5 +1,5 @@
 <?php
-    include __DIR__ . '/../../../public/PHP/extraccionDatos_Tablas.php'; // Permite hacer uso de los métodos
+    include_once __DIR__ . '/../../../public/PHP/extraccionDatos_Tablas.php'; // Permite hacer uso de los métodos
     $idDepto = 4; //Esta variable permitirá ser modificada para cada departamento
     $contro = "dirDDA";
 ?>
@@ -109,7 +109,7 @@
         <div id = "revisarTramite">
                 <!--Aquí se incluirá la tabla del trámite hecho.-->
                 <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult" method = "POST"> -->
-                <form action="/IdentiQR/redireccionAcciones.php?controller=dirDDA&action=consult" method="POST">    
+                <form action="/IdentiQR/redireccionAcciones.php?controller=dirDDA&action=consult" method="POST" onsubmit="consultarConCarga(event)">    
                     <!-- Selección de tipo de búsqueda -->
                     <fieldset>
                         <legend>Consultar por:</legend>
@@ -302,5 +302,7 @@
                 </div>
             </div>
         </div>
+
+        <input type="hidden" id="serverStatusAlert" value="<?php echo isset($statusAlert) ? $statusAlert : ''; ?>">
     </body>
 </html>

@@ -15,6 +15,105 @@
         die("Error: No se pudo establecer conexión con la base de datos.");
     }
     
+    // -- ESTO EVITA HACER ACCIONES SI LA SESIÓN NO SE ENCUENTRA ACTIVA. REDIRIGE TODO AL LOGIN
+    //NOTA.- 2025-11-19 17:25pm - DESCOMENTAR
+    /*session_start();
+    if (!isset($_SESSION['rol'])) {
+        header('Location: /IdentiQR/app/Views/Login.php');
+        exit;
+    }*/
+
+    //CHAT - ABAJO
+    // ---------------------------------------------------------------------------------------
+    // VALIDACIÓN DE SESIÓN CON SWEETALERT
+    // ---------------------------------------------------------------------------------------
+    /*session_start();
+    if (!isset($_SESSION['rol'])) {
+        // Cerramos PHP para escribir HTML limpio
+        ?>
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Acceso Denegado</title>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <style>
+                body { font-family: Arial, sans-serif; background-color: #f0f2f5; }
+            </style>
+        </head>
+        <body>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Acceso Restringido',
+                        text: 'Debes iniciar sesión para realizar esta acción.',
+                        icon: 'warning',
+                        confirmButtonText: 'Ir al Login',
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/IdentiQR/app/Views/Login.php';
+                        }
+                    });
+                });
+            </script>
+        </body>
+        </html>
+        <?php
+        exit; // IMPORTANTE: Detener la ejecución aquí
+    }*/
+    // ---------------------------------------------------------------------------------------
+    
+    
+    session_start();
+    if (!isset($_SESSION['rol'])) {
+        // Cerramos PHP para escribir HTML limpio
+        ?>
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Acceso Denegado</title>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <style>
+                body { font-family: Arial, sans-serif; background-color: #f0f2f5; }
+            </style>
+        </head>
+        <body>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    let timerInterval;
+                    Swal.fire({
+                        title: 'Acceso Restringido',
+                        html: 'Debes iniciar sesión para continuar.<br>Redirigiendo al Login...',
+                        icon: 'warning',
+                        timer: 2500, // 2000 milisegundos = 2 segundos
+                        timerProgressBar: true, // Muestra la barra de tiempo disminuyendo
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false, // Ocultamos el botón, es automático
+                        willClose: () => {
+                            // Se ejecuta justo antes de cerrar
+                            clearInterval(timerInterval);
+                        }
+                    }).then((result) => {
+                        // Cuando el timer termina (o se cierra la alerta), redirigimos
+                        window.location.href = '/IdentiQR/app/Views/Login.php';
+                    });
+                });
+            </script>
+        </body>
+        </html>
+        <?php
+        exit; // IMPORTANTE: Detener la ejecución aquí
+    }
+    //---------------------------------------------------------------------------------------
+    
+
     // En caso de no tener una ruta, se envia al formulario de insertar usuario
     $controller = isset($_GET['controller']) ? $_GET['controller'] :  'dirDirAca';
     //
@@ -133,11 +232,26 @@
             break;
         case 'usuariosGenerales':
             $controllerInstance -> reporteGeneral2_Admin();
-            break;            
+            break;    
+        case 'alumnosGenerales':
+            $controllerInstance -> reporteGeneral3_Admin();
+            break;
         //idDepto = 2; Dirección acádemica
+        case 'alumnosGenerales2':
+            $controllerInstance -> reporteGeneral_DirAca();
+            break;
         //idDepto = 3; Servicios escolares
+        case 'repGen_ServEsco':
+            $controllerInstance -> reporteGeneral_ServEsco();
+            break;
         //idDepto = 4; Dirección Desarrollo Academico
+        case 'repGen_DDA':
+            $controllerInstance -> reporteGeneral_DDA();
+            break;
         //idDepto = 5; Dirección Asuntos Estudiantiles
+        case 'repGen_DAE':
+            $controllerInstance -> reporteGeneral_DAE();
+            break;
         //idDepto = 6; Consultorio de atención de primer contacto
         case 'repInd_DirMed':
             $controllerInstance ->reporteInd_DirMed();
@@ -146,6 +260,8 @@
             $controllerInstance ->reportePorDia_DirMed();
             break;
         //idDepto = 7; Vinculación
+        case 'repGen_Vinc':
+            $controllerInstance -> reporteGeneral_Vinc();
         default:
             //echo "Error al encontrar el controlador";
             include "app/Views/index.html";

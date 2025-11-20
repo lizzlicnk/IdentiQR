@@ -105,7 +105,7 @@
         <div id = "revisarTramite">
                 <!--Aquí se incluirá la tabla del trámite hecho.-->
                 <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult" method = "POST"> -->
-                <form action="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro; ?>&action=consult" method="POST">    
+                <form action="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro; ?>&action=consult" method="POST" onsubmit="consultarConCarga(event)">    
                     <!-- Selección de tipo de búsqueda -->
                     <fieldset>
                         <legend>Consultar por:</legend>
@@ -310,5 +310,7 @@
                 </div>
             </div>
         </div>
+
+        <input type="hidden" id="serverStatusAlert" value="<?php echo isset($statusAlert) ? $statusAlert : ''; ?>">
     </body>
 </html>

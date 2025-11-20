@@ -19,6 +19,10 @@
         public function registrarTramite(){
             //Obtenemos para ver las vistas
             $idDepto = (int)($_POST['idDepto'] ?? $_GET['idDepto'] ?? 1);
+
+            // Variable para controlar la alerta en la vista
+            $statusAlert = null; 
+
             //Validar que el botón fue enviado y tiene datos - DirAcademica
             if(isset($_POST['registrarTramite_dirDirACA'])){
                 $matricula = $_POST['matriculaEscaneadoBD']; // Aquí se escaneará
@@ -88,12 +92,12 @@
                     $insert = $this->directionModel -> registrarTramite($matricula, $idTramite, $descripcionTotal);
                     
                     if($insert){
-                        //echo "<br>Registro exitoso";
+                        $statusAlert = 'success';
                     } else {
-                        //echo "<br>Error en el registro";
+                        $statusAlert = 'error_bd'; // Fallo en BD
                     }
                 } else {
-                    echo "<br>Error: No se encontró el alumno con la matrícula proporcionada";
+                    $statusAlert = 'error_matricula';
                 }
             }
             
@@ -161,12 +165,12 @@
                     $insert = $this->directionModel -> registrarTramite($matricula, $idTramite, $descripcionTotal);
                     
                     if($insert){
-                        //echo "<br>Registro exitoso";
+                        $statusAlert = 'success';
                     } else {
-                        //echo "<br>Error en el registro";
+                        $statusAlert = 'error_bd'; // Fallo en BD
                     }
                 } else {
-                    echo "<br>Error: No se encontró el alumno con la matrícula proporcionada";
+                    $statusAlert = 'error_matricula';
                 }
             }
 
@@ -238,12 +242,12 @@
                     $insert = $this->directionModel -> registrarTramite($matricula, $idTramite, $descripcionTotal);
                     
                     if($insert){
-                        //echo "<br>Registro exitoso";
+                        $statusAlert = 'success';
                     } else {
-                        //echo "<br>Error en el registro";
+                        $statusAlert = 'error_bd'; // Fallo en BD
                     }
                 } else {
-                    echo "<br>Error: No se encontró el alumno con la matrícula proporcionada";
+                    $statusAlert = 'error_matricula';
                 }
             }
 
@@ -317,12 +321,12 @@
                     $insert = $this->directionModel -> registrarTramite($matricula, $idTramite, $descripcionTotal);
                     
                     if($insert){
-                        //echo "<br>Registro exitoso";
+                        $statusAlert = 'success';
                     } else {
-                        //echo "<br>Error en el registro";
+                        $statusAlert = 'error_bd'; // Fallo en BD
                     }
                 } else {
-                    echo "<br>Error: No se encontró el alumno con la matrícula proporcionada";
+                    $statusAlert = 'error_matricula';
                 }
             }
 
@@ -399,12 +403,12 @@
                     $insert = $this->directionModel -> registrarTramite($matricula, $idTramite, $descripcionTotal);
                     
                     if($insert){
-                        //echo "<br>Registro exitoso";
+                        $statusAlert = 'success';
                     } else {
-                        //echo "<br>Error en el registro";
+                        $statusAlert = 'error_bd'; // Fallo en BD
                     }
                 } else {
-                    echo "<br>Error: No se encontró el alumno con la matrícula proporcionada";
+                    $statusAlert = 'error_matricula';
                 }
             }
 
@@ -425,12 +429,9 @@
                     $docs = [];
                     $docsTexto = 'Ninguno';
                 }
-
                 
-
                 /*AQUÍ SE RECUPERARÁN LOS DATOS DEL ALUMNO. */
                 $resultDatos = $this->alumnoModel->recuperarDatosAlumnoPorMatricula($matricula);
-
                 /*Hacemos la validación para recuperar los datos*/
                 if($resultDatos){
                     $Nombre_AUX         = $resultDatos['Nombre'];
@@ -454,7 +455,6 @@
                     $FechaIngresoInfoMed_AUX = $resultDatos['fechaIngreso_InfoMed'];
                     $Cuatri_AUX          = $resultDatos['Cuatri'];          // función calcCuatrimestre()
                     $Periodo_AUX = $resultDatos['Periodo']; //Función calcPeriodo();
-
                     //Concatenación de datos
                     $nombreCompleto = trim("$Nombre_AUX $ApePat_AUX $ApeMat_AUX");
                     $requisitos = trim($Alergias_AUX. "- Sangre: $TipoSangre_AUX");
@@ -503,16 +503,16 @@
                     $insert = $this->directionModel -> registrarTramite($matricula, $idTramite, $descripcionTotal);
                     
                     if($insert){
-                        //echo "<br>Registro exitoso";
+                        $statusAlert = 'success';
                     } else {
-                        //echo "<br>Error en el registro";
+                        $statusAlert = 'error_bd'; // Fallo en BD
                     }
                 } else {
-                    echo "<br>Error: No se encontró el alumno con la matrícula proporcionada";
+                    $statusAlert = 'error_matricula';
                 }
-                }
-                //Incluimos la vista
-                switch($idDepto){
+            }
+            //Incluimos la vista
+            switch($idDepto){
                     case 2:
                         //Dirección académica - justificantes
                         include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php'); 
@@ -545,9 +545,8 @@
                         break;
                     default:
                         include_once(__DIR__ . '/../Views/Login.php');
+                }
             }
-        }
-
         
         //2.0. Función para consultar TODOS LOS TRÁMITES
 
@@ -890,6 +889,7 @@
 
         public function actualizarTramiteManual(){
             $row = null;
+            $statusAlert = null; // Variable para el error
             if(isset($_POST['Actualizar_Tramite'])){
                 $FolioRegistro = trim($_POST['FolioAct']);
                 $idDepto = (int)($_POST['idDepto'] ?? $_GET['idDepto'] ?? 1);
@@ -899,44 +899,57 @@
                 // Obtener el primer registro del resultado
                 if($result && $result->num_rows > 0){
                     $row = $result->fetch_assoc();
+                    switch($idDepto){
+                        case 2: include_once(__DIR__ . '/../Views/dirDirAca/modificacionTramite.php'); break;
+                        case 3: include_once(__DIR__ . '/../Views/dirServEsco/modificacionTramite.php'); break;
+                        case 4: include_once(__DIR__ . '/../Views/dirDDA/modificacionTramite.php'); break;
+                        case 5: include_once(__DIR__ . '/../Views/dirDAE/modificacionTramite.php'); break;
+                        case 6: include_once(__DIR__ . '/../Views/dirMedica/modificacionTramite.php'); break;
+                        case 7: include_once(__DIR__ . '/../Views/dirVinculacion/modificacionTramite.php'); break;
+                        default: include_once(__DIR__ . '/../Views/dirDirAca/modificacionTramite.php'); break;
+                    }
+                    return; // Terminamos aquí para que se quede en la vista de edición
+                } else {
+                    //Configuramos alerta de error
+                    $statusAlert = 'error_folio';
                 }
-                //Evaluamos que tipo de direccion es para Incluirlo
+                //// Si llegamos aquí es porque hubo error. Cargamos la vista GESTIÓN (la principal)
                 switch($idDepto){
                     case 2:
                         //Dirección académica - justificantes
-                        include_once(__DIR__ . '/../Views/dirDirAca/modificacionTramite.php');
+                        include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
                         //exit();
                         break;
                     case 3:
                         //Servicio escolares
-                        include_once(__DIR__ . '/../Views/dirServEsco/modificacionTramite.php');
+                        include_once(__DIR__ . '/../Views/dirServEsco/gestionDocumentosServEsco.php');
                         //exit();
                         break;
                     case 4:
                         //DDA
-                        include_once(__DIR__ . '/../Views/dirDDA/modificacionTramite.php');
+                        include_once(__DIR__ . '/../Views/dirDDA/gestionAsistenciaTutorias.php');
                         //exit();
                         break;
                     case 5:
                         //DAE
-                        include_once(__DIR__ . '/../Views/dirDAE/modificacionTramite.php');
+                        include_once(__DIR__ . '/../Views/dirDAE/gestionDocumentosDAE.php');
                         //exit();
                         break;
                     case 6:
                         //Médico
-                        include_once(__DIR__ . '/../Views/dirMedica/modificacionTramite.php');
+                        include_once(__DIR__ . '/../Views/dirMedica/gestionDocMed.php');
                         //exit();
                         break;
                     case 7:
                         //Vinculación
-                        include_once(__DIR__ . '/../Views/dirVinculacion/modificacionTramite.php');
+                        include_once(__DIR__ . '/../Views/dirVinculacion/gestionDocumentosAlumnos.php');
                         //exit();
                         break;
                     default:
-                        include_once(__DIR__ . '/../Views/dirDirAca/modificacionTramite.php');
+                        include_once(__DIR__ . '/../Views/dirDirAca/gestionJustificantes_Dir.php');
                         break;
                 }
-                return;
+            return;
             }
             //ENVIAR INFO
             if(isset($_POST['actualizarTramite_Tramite'])){

@@ -8,24 +8,6 @@ drop database if exists IdentiQR; #Quedara como prueba
 create database IdentiQR;
 use IdentiQR;
 /*Creación de las tablas*/
-
-/*Asignación de usuarios y privilegios para usar en IdentiQR*/
-/*
-	create user 'DeptoVinculacion@localhost' identified by 'Vinculacion123_Access';
-	create user 'DeptoDireAca@localhost' identified by 'DireccionAca123_Access';
-	create user 'DeptoDDA@localhost' identified by 'DireccionDA123_Access';
-	create user 'DeptoServEsco@localhost' identified by 'ServiciosEscolares123_Access';
-	create user 'DeptoAE@localhost' identified by 'AsuntosEstudiantiles123_Access';
-	create user 'DeptoMedico@localhost' identified by 'Medico123_Access';
-    
-    grant select, insert, update, delete on identiqr.departamento to 'DeptoVinculacion@localhost';
-	grant select, insert, update, delete on identiqr.alumno to 'DeptoDireAca@localhost';
-    grant select, insert, update, delete on identiqr.departamento to 'DeptoDDA@localhost';
-    grant select, insert, update, delete on identiqr.departamento to 'DeptoServEsco@localhost';
-    grant select, insert, update, delete on identiqr.departamento to 'DeptoAE@localhost';
-    grant select, insert, update, delete on identiqr.departamento to 'DeptoMedico@localhost';
-*/
-
 #1. La tabla Departamento fungirá como identificador de los diferentes Direcciones dentro de la universidad
 create table Departamento(
 	idDepto int primary key auto_increment,
@@ -174,7 +156,6 @@ begin
     https://youtu.be/JQnrO1eDR-0?si=4VP6ykF-bHJVpSEc
     */
 end //
-
 /*		Disparadores para anotar en las bitacoras		*/ 
 delimiter //
 create trigger Ing_Bita_Usuario after insert on Usuario
@@ -231,9 +212,8 @@ INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `a
 INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R_DDA', 'identiQR.info_DDA@identiqr.com', 'IdentiQR_DDA', 'Administrativo_DesaAca',4);/*DDA - IQA2025-9E*/
 INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R_DAE', 'identiQR.info_DAE@identiqr.com', 'IdentiQR_DAE', 'Administrativo_DAE',5);/*DAE - IQE2025-A0*/
 INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R_Med', 'identiQR.info_Med@identiqr.com', 'IdentiQR_Med', 'Administrativo_Medico',6);/*Med - IQD2025-A1*/
-INSERT INTO `identiqr`.`usuario` (`id_usuario`, `nombre`, `apellido_paterno`, `apellido_materno`, `email`, `passw`, `rol`,`idDepto`) VALUES ('0', 'Identi', 'Q', 'R_Vinc', 'identiQR.info_Vinc@identiqr.com', 'IdentiQR_Vinc', 'Administrativo_Vinculacion',7);/*Vinc - IQC2025-A3*/
-select * from usuario;
-select * from departamento;
+#select * from usuario;
+#select * from departamento;
 /* DISPARADOR PARA EL REGISTRO DE LA CONTRASEÑA INICIAL - Falta*/
 
 /*Disparadores para agilizar el procedimiento de ASIGNACIÓNDE HASH a los alumnos*/
@@ -389,7 +369,6 @@ begin
     
     return c;
 end //
-
 /*Funcion para agilizar la obtención de los PERIODOS en los cuales se encuentra el alumno*/
 DELIMITER //
 CREATE FUNCTION calcPeriodo(feIngreso DATE)
@@ -420,34 +399,7 @@ BEGIN
     RETURN CONCAT(cuatri, periodo, '-', anio);
 END //
 
-/*CONSULTA - BORRAR*/
-SELECT 
-                    a.*, 
-                    c.*, 
-                    im.*, 
-                    calcCuatrimestre(a.FeIngreso) AS Cuatri
-                FROM alumno a
-                LEFT JOIN carrera c ON a.idCarrera = c.idCarrera
-                LEFT JOIN informacionmedica im ON a.Matricula = im.Matricula
-                WHERE a.Matricula = "SLAO230036";
-                                
-#BORRAR EN PRODUCCIÓN
-select * from registroservicio;
-select * from usuario;
 
-SELECT 
-                    a.*, 
-                    c.*, 
-                    im.*,
-                    registroservicio.*,
-                    
-                    calcCuatrimestre(a.FeIngreso) AS Cuatri,
-                    calcPeriodo(a.FeIngreso) AS Periodo
-                FROM alumno a
-                LEFT JOIN carrera c ON a.idCarrera = c.idCarrera
-                LEFT JOIN informacionmedica im ON a.Matricula = im.Matricula
-                LEFT JOIN registroservicio on a.Matricula = registroservicio.Matricula
-                WHERE a.Matricula = "SLAO230036";
 /*	FUNCIONES - TRANSACCIONES DISTRIBUIDAS. PERMITIR REALIZAR REPORTES */
 /* Diseña un procedimiento que permita. 1. Consultar por un rango de fechas, 2. Consultar si es Hombre o mujer en consultas/reportes individualizados*/
 drop procedure if exists reporteInd_DirMed;
@@ -522,11 +474,3 @@ end //
 call reporteInd_DirMed (2,curdate(),curdate(),"Femenino", 6); #Opción (1 o 2). Si es 1 Fecha(f1 y F2 <Rango de fechas>) Son as fechas que puede considerar. Si es 2 Genero (g - Hombre o Mujer)
 call reporteInd_DirMed (2,curdate(),curdate(),"Masculino", 6);
 
-SELECT registroservicio.*,serviciotramite.Descripcion as Descripcion, serviciotramite.idDepto as idDepto, departamento.Nombre as NombreDepto FROM registroservicio inner join serviciotramite on registroservicio.idTramite = serviciotramite.idTramite inner join departamento on servicioTramite.idDepto = departamento.idDepto;
-/*
-SELECT alumno.Genero, COUNT(*) as total
-                            FROM registroservicio
-                            INNER JOIN serviciotramite ON registroservicio.idTramite = serviciotramite.idTramite
-                            INNER JOIN alumno ON registroservicio.Matricula = alumno.Matricula
-                            WHERE DATE(registroservicio.FechaHora) BETWEEN ? AND ? AND serviciotramite.idDepto = ?
-                            GROUP BY alumno.Genero;*/

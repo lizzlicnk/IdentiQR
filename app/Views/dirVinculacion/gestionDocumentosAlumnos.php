@@ -111,7 +111,7 @@
                     
                     <hr>
                     <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
-                    <input type="submit" value="Registrar tramite - Vinculación" name = "registrarTramite_dirVinc" onclick="alert('Datos enviados con éxito')">
+                    <input type="submit" value="Registrar tramite - Vinculación" name="registrarTramite_dirVinc">
                 </fieldset>
             </form>
         </div>
@@ -119,7 +119,7 @@
         <div id = "revisarTramite">
                 <!--Aquí se incluira la tabla del trámites hecho.-->
                 <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult" method = "POST"> -->
-                <form action="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro; ?>&action=consult" method="POST">    
+                <form action="/IdentiQR/redireccionAcciones.php?controller=<?php echo $contro; ?>&action=consult" method="POST" onsubmit="consultarConCarga(event)">    
                     <!-- Selección de tipo de búsqueda -->
                     <fieldset>
                         <legend>Consultar por:</legend>
@@ -324,5 +324,7 @@
                 </div>
             </div>
         </div>
+
+        <input type="hidden" id="serverStatusAlert" value="<?php echo isset($statusAlert) ? $statusAlert : ''; ?>">
     </body>
 </html>

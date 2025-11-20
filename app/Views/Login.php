@@ -1,11 +1,6 @@
 <?php
-    //include_once "../Controllers/ControladorUsuario.php";
-    //include_once "../../config/Connection_BD.php";
-    //$controllerUsuario = new UserController($conn);
-    $showError = isset($_GET['error']) && $_GET['error'] === '1';
-    if ($showError) {
-        echo '<div id="mensajeError" style="display:block;visibility:hidden;">Credenciales inválidas</div>';
-    }
+    // Aseguramos que la variable exista para evitar errores si se carga directo
+    $statusAlert = isset($statusAlert) ? $statusAlert : '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,6 +11,8 @@
         <script src="https://kit.fontawesome.com/b41a278b92.js" crossorigin="anonymous"></script> <!--ICONOS-->
         <link rel="icon" type="image/jpg" href="/IdentiQR/public/Media/img/Favicon.ico"/> <!--FAVICON-->
         <link rel="stylesheet" href="/IdentiQR/public/CSS/stylesLogin.css"> <!--CSS-->
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body>
         <!-- !Aquí se encontrara el encabezado, este podrá cambiar: nota-->
@@ -65,6 +62,9 @@
         </main>
 
         <br>
+        <!-- INPUT OCULTO PARA COMUNICACIÓN PHP -> JS -->
+        <input type="hidden" id="loginStatus" value="<?php echo $statusAlert; ?>">
+        
         <script src="/IdentiQR/public/JavaScript/validacionLogin.js"></script>
     </body>
 </html>

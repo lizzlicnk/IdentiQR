@@ -1,81 +1,3 @@
-<!-- 
-    //Incluir el controlador de la Dirección/Departamento correspondiente
-    //Incluir el controlador de la Dirección/Departamento correspondiente
-/*
-    // Ruta segura a ControladorDirecciones.php (desde app/Views/dirDirAca -> app/Controllers)
-    $controladorPath = __DIR__ . '/../../Controllers/ControladorDirecciones.php';
-    // Ruta segura a la conexión (project_root/config/Connection_BD.php)
-    // desde app/Views/dirDirAca subimos 3 niveles: app/Views/dirDirAca -> app/Views -> app -> project_root
-    $connectionPath   = __DIR__ . '/../../../config/Connection_BD.php';
-
-    // Comprobaciones antes de incluir (mejor para depuración)
-    if (!file_exists($controladorPath)) {
-        die("Error: no se encontró el controlador en: $controladorPath");
-    }
-    if (!file_exists($connectionPath)) {
-        die("Error: no se encontró Connection_BD en: $connectionPath");
-    }
-
-    require_once $controladorPath;
-    require_once $connectionPath;
-
-    // En caso de no tener una ruta, se envia al formulario de insertar usuario
-    $controller = isset($_GET['controller']) ? $_GET['controller'] :  'dirDirAca';
-    //
-    $action = isset($_GET['action']) ? $_GET['action'] : 'inicio';
-
-    switch($controller){
-        case 'dirDirAca':
-            $controllerInstance = new DirectionsController($conn);
-            break;
-        case 'alumno':
-            $controllerInstance = new AlumnoController($conn);
-        default:
-            echo "<br> Error al encontrar el controlador";
-            exit();
-    }
-
-
-    switch($action){
-        case 'insert': //Llamar a registrarTramite
-            $controllerInstance -> registrarTramite();
-            break;
-        case 'consult': //Llamar a consultarTramitesPorDEPTO
-            // Verificar qué tipo de consulta se está realizando
-            if(isset($_POST['consultarTramite_Depto'])){
-                $controllerInstance -> consultarTramitesPorDEPTO();
-            } elseif(isset($_POST['consultarTramite_Matricula'])){
-                $controllerInstance -> consultarPorMatricula();
-            } elseif(isset($_POST['consultarTramite_Folio'])){
-                $controllerInstance -> consultarPorFolio();
-            } elseif(isset($_POST['consultarTramite_idTramite'])){
-                $controllerInstance -> consultarPorTipoTramite();
-            } else {
-                $controllerInstance -> consultarTramitesPorDEPTO();
-            }
-            break;
-        case 'update':
-            $controllerInstance -> actualizarTramite();
-            break;
-        case 'updateManual':
-            $controllerInstance -> actualizarTramiteManual();
-            break;
-        case 'delete': //Eliminar por FolioRegistro (desde la tabla - si se necesita en el futuro)
-            $controllerInstance -> bajaTramiteFR();
-            break;
-        case 'deleteFS': //Eliminar por FolioSeguimiento (desde la tabla y formulario)
-            $controllerInstance -> bajaTramiteFS();
-            break;
-        case 'inicio':
-            break;
-        default:
-            echo "Error al encontrar el controlador";
-            //include "app/views/form_index.php";
-            break;
-    }
-*/
--->
-
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -129,6 +51,19 @@
                 <a href = "/IdentiQR/app/Views/dirDirAca/gestionJustificantes_Dir.php#generarJustificante">Generar trámite</a>
                 <a href = "/IdentiQR/app/Views/dirDirAca/gestionJustificantes_Dir.php#revisarJustificante">Revisar trámite</a>
             </section>
+
+            <section>
+                <h2>Reportes PDF - Consultar generales</h2>
+                <div class="reporte-container">
+                    <h3>Reporte de alumnos</h3>
+                    <form id="formRepInd" action="/IdentiQR/redireccionAcciones.php?controller=reportsGeneral&action=alumnosGenerales2" method="POST" novalidate>
+                        <input type="hidden" name="idDepto" value="2">
+                        <div style="margin-top:10px;">
+                            <input type="submit" class="btn-submit" value="Generar Reporte de Alumnos" name = "reporteIndividualizado_DirAca">
+                        </div>
+                    </form>
+                </div>
+            </section>
         </div>
 
         <br>
@@ -154,5 +89,6 @@
                 </div>
             </div>
         </footer>
+        <input type="hidden" id="serverStatusAlert" value="<?php echo isset($statusAlert) ? $statusAlert : ''; ?>">
     </body>
 </html>

@@ -147,8 +147,6 @@ function seleccionarAccion(event, accionValue) {
         document.getElementById('formConsultaUsuario').submit();
     });
 }
-
-
 function consultarTodo(event) {
     event.preventDefault(); // también evita redirección o envío
 

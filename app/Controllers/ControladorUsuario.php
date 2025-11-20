@@ -116,6 +116,7 @@
             
             //Método para iniciar sesion
             public function loginUsuario(){
+                $statusAlert = null; // Variable para controlar la alerta //Nuevo: 2025-11-20 12:00am
                 if (isset($_POST['enviarLogin'])) {
                     $usuario = trim($_POST['usuario']) ?? '';
                     $password = trim($_POST['password']) ?? '';
@@ -123,8 +124,10 @@
                     $loginUSR = $this -> modelUser -> loginUsuarioSP($usuario, $password);
                     if (!$loginUSR) {
                         // En lugar de hacer solo echo, redirigimos al formulario con un flag de error
-                        header("Location: ../Views/Login.php?error=1");
-                        exit();
+                        //header("Location: ../Views/Login.php?error=1");
+                        $statusAlert = 'error_credenciales';  //Nuevo: 2025-11-20 12:00am
+                        include_once __DIR__ . '/../Views/Login.php'; //Nuevo: 2025-11-20 12:00am
+                        //exit();
                     } else {
                         session_start();
                         
@@ -141,6 +144,8 @@
                     }
                 } else {
                     //Incluimos la clase de la vista
+                    //header("Location: /IdentiQR/index.html");
+                    // Si intentan entrar directo sin POST
                     header("Location: /IdentiQR/index.html");
                 }
             }
@@ -150,9 +155,11 @@
                 session_start();
                 session_unset();
                 session_destroy();
-                header("Location: ../Views/Login.php");
+                header("Location: /IdentiQR/app/Views/Login.php");
                 exit();
             }
+
+            
 
             //Método para modificar datos de un usuario
             public function actualizarUsuario(){

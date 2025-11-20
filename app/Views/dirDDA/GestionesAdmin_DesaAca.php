@@ -47,8 +47,24 @@
             <hr>
 
             <section>
-                <h2>Consultas generales</h2>
+                <h2>Reportes PDF - Consultar generales</h2>
+                <div class="reporte-container">
+                    <h3>Reporte Entre Fechas</h3>
+                    <form id="formRepInd" action="/IdentiQR/redireccionAcciones.php?controller=reportsGeneral&action=repGen_DDA" method="POST" novalidate>
+                        <div id="camposFechas">
+                            <label for="fe1">Fecha mínima (Fecha 1):</label>
+                            <input type="date" name="fe1" id="fe1">
+                            <label for="fe2">Fecha máxima(Fecha 2):</label>
+                            <input type="date" name="fe2" id="fe2">
+                            <div id="err-fechas" style="color:#b00; display:none;"></div>
+                        </div>
 
+                        <input type="hidden" name="idDepto" value="4">
+                        <div style="margin-top:10px;">
+                            <input type="submit" class="btn-submit" value="Generar Reporte de Citas del Día" name = "reporteIndividualizado_DDA">
+                        </div>
+                    </form>
+                </div>
             </section>
         </div>
 

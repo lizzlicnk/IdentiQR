@@ -191,6 +191,7 @@ function escapeHtml(text) {
 
 // Event listeners
 window.addEventListener("load", function() {
+    manejarAlertasServidor(); // <--- Funciones de notificaciones
     cargarTutoriasIndividuales(); //Así hacemos que se pueda usar el check
     setFechaSolicitudHoy(); //Función para la asignación de fechas
     reporteIndividualizado_DirMed(); // Función para el reporte individualizado
@@ -472,6 +473,181 @@ function reporteIndividualizado_DirMed() {
 
     // Inicializar estado de campos (IMPORTANTE para cuando carga la página)
     toggleCampos();
+}
+
+/**
+ * FUNCIONES QUE PERMITIRÁN REALIZAR LA BUSQUEDA-SWEET ALERT
+ */
+//Función para mostrar el usuario/alumno que fue borrado del sistema.
+function mostrarAlerta(tipo, mensaje) {
+    Swal.fire({
+        icon: tipo,
+        title: tipo === 'success' ? '¡Éxito!' : 'Error',
+        text: mensaje,
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false
+    });
+}
+
+//Función para mostrar que se agrego un nuevo Usuario/Alumno al sistema. Boton de confirmación e información.
+function mostrarRegistro(){
+    Swal.fire({
+        title: "Registro exitoso. IdentiQR!",
+        text: "El registro del Usuario/Alumno se realizo de manera correcta.",
+        imageUrl: "/IdentiQR/public/Media/img/Logo.png",
+        imageWidth: 200,
+        imageHeight: 150,
+        imageAlt: "Logo IdentiQR"
+    });
+}
+
+//Consultar registros 
+function seleccionarAccion(event, accionValue) {
+    event.preventDefault(); // Prevenir el submit automático
+    const inputAccion = document.getElementById('accion');
+    inputAccion.value = accionValue;
+
+    const inputUsuario = document.getElementById('FolioAct').value.trim();
+
+    if (accionValue === 'buscar' && inputUsuario === '') {
+        Swal.fire({
+            title: "Campo vacío",
+            text: "Por favor ingresa el Folio a consult.",
+            icon: "warning",
+            timer: 2000,
+            showConfirmButton: false
+        });
+        return; // No enviar formulario si está vacío
+    }
+
+    Swal.fire({
+        title: accionValue === 'buscar' ? "Consultando tramite..." : "Consultando todos los tramites...",
+        icon: "info",
+        timer: 1500,
+        showConfirmButton: false
+    }).then(() => {
+        document.getElementById('formConsultaModificacion').submit();
+    });
+}
+function consultarTodo(event) {
+    event.preventDefault(); // también evita redirección o envío
+
+    Swal.fire({
+        title: "Consultando todos los tramites...",
+        text: "Por favor espera un momento.",
+        icon: "info",
+        timer: 1500,
+        showConfirmButton: false
+    });
+    // Espera los 2 segundos del SweetAlert antes de redirigir
+    setTimeout(() => {
+        //window.location.href = "/IdentiQR/app/Controllers/ControladorUsuario.php?action=consultarUsuario&consultarTodo=1";
+        //window.location.reload();
+    }, 2000);
+}
+
+// confirmacionBotones.js (parte pública)
+function mostrarAlertaBusqueda(tipo, mensaje) {
+    // tipo: 'info' | 'success' | 'error'
+    if (typeof Swal === 'undefined') {
+        console.warn('SweetAlert2 no está cargado.');
+        alert(mensaje); // fallback
+        return;
+    }
+
+    Swal.fire({
+        icon: tipo || 'info',
+        title: tipo === 'success' ? 'Éxito' : (tipo === 'error' ? 'Error' : 'Información'),
+        text: mensaje || '',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false
+    });
+}
+
+
+/**
+ * FUNCIÓN que Maneja las alertas enviadas desde PHP mediante el input hidden #serverStatusAlert
+ **/
+function manejarAlertasServidor() {
+    const inputStatus = document.getElementById('serverStatusAlert');
+    
+    if (!inputStatus || !inputStatus.value) {
+        return; // No hay alerta que mostrar
+    }
+
+    const status = inputStatus.value;
+
+    // Limpiamos el value para que si recarga por JS no salga de nuevo (aunque en recarga de página sí saldrá)
+    // inputStatus.value = ''; 
+
+    if (status === 'error_matricula') {
+        Swal.fire({
+            title: 'Error',
+            text: 'No se encontró el alumno con la matrícula proporcionada',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    } else if (status === 'success') {
+        Swal.fire({
+            title: 'Éxito',
+            text: 'Registro guardado correctamente',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    } else if (status === 'error_bd') {
+        Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al guardar en la Base de Datos',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    }
+
+    //EERROR AL BUSCAR FOLIO PARA ACTUALIZAR
+    else if (status === 'error_folio') {
+        Swal.fire({ 
+            title: 'No encontrado', 
+            text: 'El Folio ingresado no existe o no se encuentra registrado.', 
+            icon: 'warning', 
+            confirmButtonText: 'Entendido' 
+        });
+    }
+}
+
+/**
+ * Función que Muestra alerta de carga antes de enviar el formulario
+ */
+function consultarConCarga(event) {
+    event.preventDefault(); // Detener envío inmediato
+    const form = event.target; // Obtener el formulario que disparó el evento
+    const submitter = event.submitter;  
+
+    Swal.fire({
+        title: 'Consultando...',
+        text: 'Buscando información, por favor espere.',
+        icon: 'info',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        timer: 1500, // Tiempo de espera (estético)
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    }).then(() => {
+        // Una vez termina el timer, enviamos el formulario manualmente
+        // form.submit() por defecto NO envía el valor del botón submit, por eso PHP fallaba.
+        if (submitter && submitter.name) {
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = submitter.name; // Ej: 'consultarTramite_Depto'
+            hiddenInput.value = submitter.value;
+            form.appendChild(hiddenInput);
+        }
+        
+        // Enviar formulario manualmente. Ahora PHP sí detectará el $_POST correcto.
+        form.submit();
+    });
 }
 /*
         <script>

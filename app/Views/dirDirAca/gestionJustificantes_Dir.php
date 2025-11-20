@@ -1,4 +1,7 @@
-
+<?php
+    $idDepto = 2; //Esta variable permitira ser modificada para cada departamentp
+    $contro = "dirDirAca";
+?>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -74,7 +77,7 @@
                         <textarea rows="2" cols="30" id = "Requisitos" name = "Requisitos" placeholder="Requisitos o notas aquí, si no aplica dejar en blanco. Ejemplo [Motivo de salud, personal, etc. ], Ejemplo [POO,FPOO,ABD,...]"></textarea>
                     <hr>
 
-                    
+                    <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
                     <input type="submit" value="Registrar servicio (Justificante o Recursamiento)" name = "registrarTramite_dirDirACA">
                 </fieldset>
             </form>
@@ -83,7 +86,7 @@
         <div id = "revisarJustificante">
                 <!--Aquí se incluirá la tabla del justificante hecho.-->
                 <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult" method = "POST"> -->
-                <form action="/IdentiQR/redireccionAcciones.php?controller=dirDirAca&action=consult" method="POST">    
+                <form action="/IdentiQR/redireccionAcciones.php?controller=dirDirAca&action=consult" method="POST" onsubmit="consultarConCarga(event)">    
                     <!-- Selección de tipo de búsqueda -->
                     <fieldset>
                         <legend>Consultar por:</legend>
@@ -112,7 +115,7 @@
                     <!-- Campo: Mostrar Todos -->
                     <div id="campoTodosConsulta" style="display:none;">
                         <p>Se mostrarán todos los trámites del departamento.</p>
-                        <input type="hidden" name="idDepto" value ="2"> <!--NOTA: Considerar que este tipo HIDDEN el valor siempre cambiara-->
+                        <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>"> <!--NOTA: Considerar que este tipo HIDDEN el valor siempre cambiara-->
                         <input type="submit" value="Mostrar Todos los Trámites" name="consultarTramite_Depto">
                     </div>
 
@@ -122,6 +125,7 @@
                         <button type="button" id="btnEscanearConsulta">Escanear QR</button>
                         <input type="text" id="matriculaConsultaVisible" placeholder="Matrícula escaneada" disabled>
                         <input type="hidden" name="Matricula" id="matriculaConsulta">
+                        <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
                         <br><br>
                         <input type="submit" value="Consultar por Matrícula" name="consultarTramite_Matricula">
                     </div>
@@ -130,6 +134,7 @@
                     <div id="campoFolioConsulta" style="display:none;">
                         <label for="folioConsulta">Ingrese Folio:</label>
                         <input type="text" name="FolioRegistro" id="folioConsulta" placeholder="Ej. FOL12345">
+                        <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
                         <input type="submit" value="Consultar por Folio" name="consultarTramite_Folio">
                     </div>
 
@@ -141,6 +146,7 @@
                             <option value="0011">Justificante</option>
                             <option value="0012">Recursamiento</option>
                         </select>
+                        <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
                         <input type="submit" value="Consultar por Trámite" name="consultarTramite_idTramite">
                     </div>
                     </form> 
@@ -173,7 +179,7 @@
                                             <a href="/IdentiQR/redireccionAcciones.php?action=update&Folio=<?php echo $row['FolioSeguimiento'] ?? ''; ?>">
                                                 <button type="button">Editar</button>
                                             </a>
-                                            <button type="button" onclick="confirmarEliminacion('<?php echo $row['FolioSeguimiento'] ?? ''; ?>')">Eliminar</button>
+                                            <button type="button" onclick="confirmarEliminacion('<?php echo $contro?>','<?php echo $row['FolioSeguimiento'] ?? ''; ?>','<?php echo $idDepto;?>')">Eliminar</button>
                                         </td>
                                     </tr>
                             <?php
@@ -200,7 +206,7 @@
                     <!--!: Aquí se encontrara toda la información relevante para obtener un QR y generar el justificante-->
                     <label for="folioConsulta">Ingrese Folio:</label>
                     <input type="text" name="FolioAct" id="FolioAct" placeholder="Ej. FOL12345 o [0001,0002]"> <!--*: Aquí debería abrir la camara para escanear-->
-                    <input type="submit" value="Actualizar registro" name = "Actualizar_Tramite" onclick="alert('Redirección a página de actualización')">
+                    <input type="submit" value="Actualizar registro" name = "Actualizar_Tramite" onclick="alert('Redirección a página de actualización')" onclick="seleccionarAccion(event, 'buscar')>
                 </fieldset>
             </form>
         </div>
@@ -212,7 +218,7 @@
                     <legend>Eliminar trámite por Folio de Seguimiento</legend>
                     <label for="FolioSeguimiento">Folio de Seguimiento a eliminar: </label>
                     <input type="text" name="FolioSeguimiento" id="FolioSeguimiento" placeholder="Ej. MATRICULA-DATOS-4LETRAS etc. (Consultar en su vista)" required>
-                    <input type="hidden" name="idDepto" value="2">
+                    <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
                     <br><br>
                     <input type="submit" value="Eliminar Trámite" name="BajaServicio_Tramite">
                 </fieldset>
@@ -277,12 +283,6 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            window.addEventListener('popstate',function(event){
-                history.pushState(null,null,window.location.pathname);
-                history.pushState(null,null,window.location.pathname);
-            },false);
-        </script>
+        <input type="hidden" id="serverStatusAlert" value="<?php echo isset($statusAlert) ? $statusAlert : ''; ?>">
     </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-    include __DIR__ . '/../../../public/PHP/extraccionDatos_Tablas.php'; // Permite hacer uso de los métodos
+    include_once __DIR__ . '/../../../public/PHP/extraccionDatos_Tablas.php'; // Permite hacer uso de los métodos
     $idDepto = 5; //Esta variable permitirá ser modificada para cada departamento
     $contro = "dirDAE";
 ?>
@@ -93,7 +93,7 @@
         <div id = "revisarTramite">
                 <!--Aquí se incluirá la tabla del trámite hecho.-->
                 <!--<form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=consult" method = "POST"> -->
-                <form action="/IdentiQR/redireccionAcciones.php?controller=dirDAE&action=consult" method="POST">    
+                <form action="/IdentiQR/redireccionAcciones.php?controller=dirDAE&action=consult" method="POST" onsubmit="consultarConCarga(event)">    
                     <!-- Selección de tipo de búsqueda -->
                     <fieldset>
                         <legend>Consultar por:</legend>
@@ -185,7 +185,7 @@
                                         <a href="/IdentiQR/redireccionAcciones.php?controller=dirDAE&action=updateDAE&Folio=<?php echo $row['FolioSeguimiento'] ?? ''; ?>&idDepto=<?php echo $idDepto; ?>">
                                             <button type="button">Editar</button>
                                         </a>
-                                        <button type="button" onclick="confirmarEliminacion('<?php echo $row['FolioSeguimiento'] ?? ''; ?>')">Eliminar</button>
+                                        <button type="button" onclick="confirmarEliminacion('<?php echo $contro;?>','<?php echo $row['FolioSeguimiento'] ?? ''; ?>', '<?php echo $idDepto?>')">Eliminar</button>
                                     </td>
                                 </tr>
                             <?php
@@ -205,7 +205,7 @@
         
         <div id = "modificarTramite">
             <!-- <form action="/IdentiQR/app/Views/dirDirAca/GestionesAdmin_Direccion.php?action=updateManual" method = "POST"> -->
-            <form action="/IdentiQR/redireccionAcciones.php?controller=dirDAE&action=updateManualDAE" method="POST">
+            <form action="/IdentiQR/redireccionAcciones.php?controller=dirDAE&action=updateManualDAE" method="POST" id="formConsultaModificacion">
                 <fieldset>
                     <table></table>
                     <legend>Actualizar extracurricular</legend>
@@ -213,7 +213,7 @@
                     <label for="folioConsulta">Ingrese Folio:</label>
                     <input type="text" name="FolioAct" id="FolioAct" placeholder="Ej. FOL12345 o [0001,0002]"> <!--*: Aquí debería abrir la cámara para escanear-->
                     <input type="hidden" name="idDepto" value="<?php echo $idDepto;?>">
-                    <input type="submit" value="Actualizar registro" name = "Actualizar_Tramite" onclick="alert('Redirección a página de actualización')">
+                    <input type="submit" value="Actualizar registro" name = "Actualizar_Tramite" onclick="alert('Redirección a página de actualización')" onclick="seleccionarAccion(event, 'buscar')">
                 </fieldset>
             </form>
         </div>
@@ -290,5 +290,7 @@
                 </div>
             </div>
         </div>
+
+        <input type="hidden" id="serverStatusAlert" value="<?php echo isset($statusAlert) ? $statusAlert : ''; ?>">
     </body>
 </html>
